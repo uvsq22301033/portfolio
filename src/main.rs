@@ -294,7 +294,7 @@ async fn supp_photo(
     return Ok(Html("<script>window.location='/photo_admin'</script>".to_string()));
     }  
     else {
-        Err("Suppression non autorisée".to_string())
+        Err("Suppression non autorisé".to_string())
     }
     
 }
