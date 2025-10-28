@@ -1,0 +1,11 @@
+/Users/badiskhouildi/portfolio/target/debug/deps/bitflags-80f97544ebc8bb8a.d: /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/lib.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/iter.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/parser.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/traits.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/public.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/internal.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/external.rs
+
+/Users/badiskhouildi/portfolio/target/debug/deps/libbitflags-80f97544ebc8bb8a.rmeta: /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/lib.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/iter.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/parser.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/traits.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/public.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/internal.rs /Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/external.rs
+
+/Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/lib.rs:
+/Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/iter.rs:
+/Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/parser.rs:
+/Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/traits.rs:
+/Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/public.rs:
+/Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/internal.rs:
+/Users/badiskhouildi/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.10.0/src/external.rs:

@@ -1,0 +1,1 @@
+HandleError<ServeDir, {closure@src/main.rs:35:63: 35:86}, _>: Service<axum::http::Request<axum::body::Body>>
