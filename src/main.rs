@@ -52,7 +52,10 @@ async fn main() {
     .route("/redirect", post(redirect))
     .route("/homepage_admin", get(homepage_admin))
     .route("/homepage_invite", get(homepage_invite))
-    .route("/photo_invite", get(get_photos_invite))
+    .route("/photo_invite", get(tout_photos_invite))
+    .route("/photo_invite/portrait", get(portrait_photos_invite))
+    .route("/photo_invite/animaux", get(animaux_photos_invite))
+    .route("/photo_invite/paysage", get(paysage_photos_invite))
     .route("/photo_admin", get(get_photos_admin))
     .route("/upload", post(upload_photo))
     .route("/delete", post(supp_photo))
@@ -220,7 +223,7 @@ async fn homepage_invite() -> Html<String> {
                 </p>
                 <p style="font-size:18px; color:#555; margin-bottom:15px;">
                     Ayant fais l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
-                    Ce site à été créer à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
+                    Ce site à été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
                 <p style="font-size:18px; color:#0056b3; margin-bottom:15px;">
                     Bienvenue dans mon univers et bonne visite !
@@ -308,7 +311,7 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
 
 
 
-async fn get_photos_invite(
+async fn tout_photos_invite(
     State(db): State<SqlitePool>,
 ) -> Result<Html<String>, axum::http::StatusCode> {
 
@@ -346,7 +349,7 @@ async fn get_photos_invite(
                         background: white;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 400px; /* 🔹 photo plus grande */
+                        width: 700px;
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
@@ -357,7 +360,7 @@ async fn get_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0; /* 🔹 pas de bords arrondis */
+                        border-radius: 0;
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -380,15 +383,43 @@ async fn get_photos_invite(
                         font-size: 16px;
                         cursor: pointer;
                         text-decoration: none;
+                        border-radius: 6px;
+                        display: inline-block; /* 🔹 évite les chevauchements */
                     }
                     .btn:hover {
                         background-color: #0056b3;
+                    }
+                    /* 🔹 Conteneur boutons d’action */
+                    .actions {
+                        margin-bottom: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px; /* espace entre les lignes */
+                    }
+                    /* 🔹 Ligne spéciale pour filtres */
+                    .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
                     }
                 </style>
             </head>
             <body>
                 <h1>Galerie</h1>
-                <a class='btn' href='/homepage_invite'>Accueil</a>
+
+                <!-- 🔹 Nouvelle structure pour les boutons -->
+                <div class='actions'>
+                    <a class='btn' href='/homepage_invite'>Accueil</a>
+
+                    <div class='filters'>
+                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                    </div>
+                </div>
+
                 <div class='gallery'>
     "#);
 
@@ -400,7 +431,6 @@ async fn get_photos_invite(
                     <div class='desc'>
                         <p><span>Catégorie:</span> {1}</p>
                         <p><span>Description:</span> {2}</p>
-                        </p>
                     </div>
                 </div>
             "#,
@@ -416,6 +446,411 @@ async fn get_photos_invite(
 }
 
 
+
+
+
+async fn portrait_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT id, filename, description, category FROM photos WHERE category = 'portrait'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #f0f2f5;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2.5em;
+                    }
+                    .gallery {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        gap: 20px;
+                        padding: 20px;
+                    }
+                    .photo-card {
+                        background: white;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        overflow: hidden;
+                        width: 700px;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #555;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .btn {
+                        margin: 10px 5px;
+                        background-color: #007BFF;
+                        border: none;
+                        color: white;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 6px;
+                        display: inline-block; /* 🔹 évite les chevauchements */
+                    }
+                    .btn:hover {
+                        background-color: #0056b3;
+                    }
+                    /* 🔹 Conteneur boutons d’action */
+                    .actions {
+                        margin-bottom: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px; /* espace entre les lignes */
+                    }
+                    /* 🔹 Ligne spéciale pour filtres */
+                    .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Galerie</h1>
+
+                <!-- 🔹 Nouvelle structure pour les boutons -->
+                <div class='actions'>
+                    <a class='btn' href='/homepage_invite'>Accueil</a>
+
+                    <div class='filters'>
+                        <a class='btn' href='/photo_invite'>Tous</a>
+                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                    </div>
+                </div>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows {
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card'>
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            photo.filename,
+            photo.category,
+            photo.description
+        ));
+    }
+
+    html.push_str("</div></body></html>");
+
+    Ok(Html(html))
+}
+
+
+async fn animaux_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT id, filename, description, category FROM photos WHERE category = 'animaux'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #f0f2f5;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2.5em;
+                    }
+                    .gallery {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        gap: 20px;
+                        padding: 20px;
+                    }
+                    .photo-card {
+                        background: white;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        overflow: hidden;
+                        width: 700px;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #555;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .btn {
+                        margin: 10px 5px;
+                        background-color: #007BFF;
+                        border: none;
+                        color: white;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 6px;
+                        display: inline-block; /* 🔹 évite les chevauchements */
+                    }
+                    .btn:hover {
+                        background-color: #0056b3;
+                    }
+                    /* 🔹 Conteneur boutons d’action */
+                    .actions {
+                        margin-bottom: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px; /* espace entre les lignes */
+                    }
+                    /* 🔹 Ligne spéciale pour filtres */
+                    .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Galerie</h1>
+
+                <!-- 🔹 Nouvelle structure pour les boutons -->
+                <div class='actions'>
+                    <a class='btn' href='/homepage_invite'>Accueil</a>
+
+                    <div class='filters'>
+                        <a class='btn' href='/photo_invite'>Tous</a>
+                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                    </div>
+                </div>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows {
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card'>
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            photo.filename,
+            photo.category,
+            photo.description
+        ));
+    }
+
+    html.push_str("</div></body></html>");
+
+    Ok(Html(html))
+}
+
+async fn paysage_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT id, filename, description, category FROM photos WHERE category = 'paysage'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #f0f2f5;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2.5em;
+                    }
+                    .gallery {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        gap: 20px;
+                        padding: 20px;
+                    }
+                    .photo-card {
+                        background: white;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        overflow: hidden;
+                        width: 700px;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #555;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .btn {
+                        margin: 10px 5px;
+                        background-color: #007BFF;
+                        border: none;
+                        color: white;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 6px;
+                        display: inline-block; /* 🔹 évite les chevauchements */
+                    }
+                    .btn:hover {
+                        background-color: #0056b3;
+                    }
+                    /* 🔹 Conteneur boutons d’action */
+                    .actions {
+                        margin-bottom: 20px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px; /* espace entre les lignes */
+                    }
+                    /* 🔹 Ligne spéciale pour filtres */
+                    .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Galerie</h1>
+
+                <!-- 🔹 Nouvelle structure pour les boutons -->
+                <div class='actions'>
+                    <a class='btn' href='/homepage_invite'>Accueil</a>
+
+                    <div class='filters'>
+                        <a class='btn' href='/photo_invite'>Tous</a>
+                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                    </div>
+                </div>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows {
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card'>
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            photo.filename,
+            photo.category,
+            photo.description
+        ));
+    }
+
+    html.push_str("</div></body></html>");
+
+    Ok(Html(html))
+}
 
 
 async fn get_photos_admin(
