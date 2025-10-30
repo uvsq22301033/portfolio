@@ -25,7 +25,7 @@ struct Photo {
     id: i32,
     filename: String,
     description: String,
-    created_at: String,
+    category: String, // 🔹 nouvelle colonne
 }
 
 #[derive(Deserialize)]
@@ -72,14 +72,62 @@ async fn main() {
 async fn identification(cookies: Cookies) -> Html<String> {
     cookies.add(Cookie::new("is_admin", "false"));
     let html = r#"
-         <html>
+        <html>
+            <head>
+                <!-- 🔹 CHANGEMENT : style global -->
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #fafafa;
+                        text-align: center;
+                        margin: 50px;
+                    }
+                    h1 {
+                        color: #333;
+                        margin-bottom: 30px;
+                    }
+                    button {
+                        background-color: #007BFF;
+                        border: none;
+                        color: white;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        border-radius: 6px;
+                        margin: 5px;
+                        cursor: pointer;
+                        transition: background-color 0.3s;
+                    }
+                    button:hover {
+                        background-color: #0056b3;
+                    }
+                    input[type="password"] {
+                        padding: 10px;
+                        font-size: 16px;
+                        border-radius: 6px;
+                        border: 1px solid #ccc;
+                        margin: 5px 0;
+                        width: 200px;
+                    }
+                    form {
+                        display: inline-block; /* 🔹 centrer le formulaire */
+                        margin-top: 20px;
+                    }
+                    .button-container {
+                        margin-top: 20px;
+                    }
+                </style>
+            </head>
             <body>
                 <h1>IDENTIFICATION</h1>
-                <a href="/homepage_invite">
-                    <button>invité(e)</button>
-                </a>
+
+                <div class="button-container">
+                    <a href="/homepage_invite">
+                        <button>Invité(e)</button>
+                    </a>
+                </div>
+
                 <form action="/redirect" method="post">
-                    <input type="password" name="password" placeholder="Mot de passe admin"/>
+                    <input type="password" name="password" placeholder="Mot de passe admin"/><br/>
                     <button type="submit">Entrer</button>
                 </form>
             </body>
@@ -126,21 +174,66 @@ async fn redirect(
 
 async fn homepage_invite() -> Html<String> {
     let html = r#"
-         <html>
+        <html>
+            <head>
+                <!-- 🔹 CHANGEMENT : ajout de style global -->
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        background-color: #fafafa; 
+                        text-align: center; 
+                        margin: 40px;
+                    }
+                    h1 { color: #333; }
+                    button {
+                        background-color: #007BFF;
+                        border: none;
+                        color: white;
+                        padding: 10px 20px;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 16px;
+                        border-radius: 6px;
+                        margin: 5px;
+                        cursor: pointer;
+                    }
+                    button:hover {
+                        background-color: #0056b3;
+                    }
+                    img {
+                        border-radius: 8px;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                        margin: 15px;
+                    }
+                    .button-container {  /* 🔹 CHANGEMENT : conteneur pour les boutons */
+                        margin-top: 20px;
+                        display: flex;
+                        justify-content: center;
+                        gap: 10px;  /* espace entre les boutons */
+                    }
+                </style>
+            </head>
             <body>
                 <h1>Bienvenue sur mon portfolio !</h1>
-                <!-- Bouton pour aller sur la galerie -->
-                <a href="/photo_invite">
-                    <button>Voir les photos</button>
+                <p style="font-size:18px; color:#555; margin-bottom:15px;">
+                Bienvenue voyageur !
+                </p>
+                <p style="font-size:18px; color:#555; margin-bottom:15px;">
+                    Ayant fais l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
+                    Ce site à été créer à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
+                </p>
+                <p style="font-size:18px; color:#0056b3; margin-bottom:15px;">
+                    Bienvenue dans mon univers et bonne visite !
+                </p>
+                <img src="/images/banniere.jpg" alt="bannière" width="600"/>
                 
-                </a>
-                <a href="/">
-                    <button>identification</button>
-                </a>
-
-                <hr/>
-
-                
+                <!-- 🔹 CHANGEMENT : mise des boutons dans un div centré sous l'image -->
+                <div class="button-container">
+                    <a href="/photo_invite"><button>Voir les photos</button></a>
+                    <a href="/"><button>Identification</button></a>
+                </div>
+            </body>
+        </html>
     "#;
     Html(html.to_string())
 }
@@ -155,12 +248,57 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
 
     Html(r#"
         <html>
+            <head>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #fafafa;
+                        text-align: center;
+                        padding: 40px;
+                    }
+                    form {
+                        background-color: #fff;
+                        padding: 20px;
+                        border-radius: 10px;
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                        display: inline-block;
+                        margin-bottom: 20px;
+                    }
+                    input, select, button, textarea {
+                        margin: 10px;
+                        padding: 10px;
+                        border-radius: 5px;
+                        border: 1px solid #ccc;
+                        width: 80%;
+                        max-width: 300px;
+                    }
+                    button {
+                        background-color: #007BFF;
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                    }
+                    button:hover {
+                        background-color: #0056b3;
+                    }
+                </style>
+            </head>
             <body>
                 <h1>Bienvenue Admin !</h1>
+                
+                <!-- 🔹 CHANGEMENT : formulaire complet avec description et catégorie -->
                 <form action="/upload" method="post" enctype="multipart/form-data">
-                    <input type="file" name="file"/>
+                    <input type="file" name="file" accept="image/*" required/><br>
+                    <textarea name="description" placeholder="Description" rows="3"></textarea><br>
+                    <select name="category" required>
+                        <option value="paysage">Paysage</option>
+                        <option value="portrait">Portrait</option>
+                        <option value="animaux">Animaux</option>
+                        <option value="autre">Autre</option>
+                    </select><br>
                     <button type="submit">Uploader une image</button>
                 </form>
+
                 <a href="/photo_admin"><button>Voir les photos</button></a>
                 <a href="/"><button>Déconnexion</button></a>
             </body>
@@ -175,7 +313,7 @@ async fn get_photos_invite(
 ) -> Result<Html<String>, axum::http::StatusCode> {
 
     let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT id, filename, description, created_at FROM photos"#
+        r#"SELECT id, filename, description, category FROM photos"#
     )
     .fetch_all(&db)
     .await
@@ -183,28 +321,100 @@ async fn get_photos_invite(
 
     let mut html = String::from(r#"
         <html>
+            <head>
+                <style>
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #f0f2f5;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2.5em;
+                    }
+                    .gallery {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        gap: 20px;
+                        padding: 20px;
+                    }
+                    .photo-card {
+                        background: white;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        overflow: hidden;
+                        width: 400px; /* 🔹 photo plus grande */
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0; /* 🔹 pas de bords arrondis */
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #555;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .btn {
+                        margin: 10px 5px;
+                        background-color: #007BFF;
+                        border: none;
+                        color: white;
+                        padding: 10px 20px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        text-decoration: none;
+                    }
+                    .btn:hover {
+                        background-color: #0056b3;
+                    }
+                </style>
+            </head>
             <body>
-                <h1>Photos</h1>
-                <!-- Bouton retour à l'accueil -->
-                <a href="/homepage_invite">
-                    <button>Accueil</button>
-                </a>
+                <h1>Galerie</h1>
+                <a class='btn' href='/homepage_invite'>Accueil</a>
+                <div class='gallery'>
     "#);
+
     for photo in rows {
-            html.push_str(&format!(
-                r#"
-                <div>
-                    <img src="/images/{0}" width="300" /><br/>
-                    <p>{1}</p>
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card'>
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                        </p>
+                    </div>
                 </div>
-                <hr/>
-                "#,
-                photo.filename, photo.description
-            ));}
-    html.push_str("</body></html>");
+            "#,
+            photo.filename,
+            photo.category,
+            photo.description
+        ));
+    }
+
+    html.push_str("</div></body></html>");
 
     Ok(Html(html))
 }
+
 
 
 
@@ -218,7 +428,7 @@ async fn get_photos_admin(
     }
 
     let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT id, filename, description, created_at FROM photos"#
+        r#"SELECT id, filename, description, category FROM photos"#
     )
     .fetch_all(&db)
     .await
@@ -266,46 +476,55 @@ async fn upload_photo(
 
     let is_admin = cookies.get("is_admin").map(|c| c.value() == "true").unwrap_or(false);
     if !is_admin {
-        return Err("Aucun fichier reçu".to_string());
+        return Err("Accès refusé".to_string());
     }
 
-    // On récupère le premier champ du multipart (le fichier)
+    let mut filename = String::new();
+    let mut description = String::new();
+    let mut category = "autre".to_string(); // valeur par défaut
+
     while let Some(field) = multipart.next_field().await.map_err(|e| e.to_string())? {
-        let filename = field.file_name().unwrap_or("file.jpg").to_string();
-        let data = field.bytes().await.map_err(|e| e.to_string())?;
-
-
-
-        // Sauvegarde locale
-        let filepath = format!("images/{}", filename);
-        tokio::fs::write(&filepath, &data)
-        .await
-        .map_err(|e| e.to_string())?;
-
-        // Insert dans la BDD
-        let result = sqlx::query(
-            "INSERT INTO photos (filename) VALUES (?)",
-        )
-        .bind(filename)
-        .execute(&db)
-        .await
-        .map_err(|e| e.to_string())?;
-
-        let id = result.last_insert_rowid();
-
-        let photo = sqlx::query_as::<_, Photo>(
-            "SELECT id, filename, description, created_at FROM photos WHERE id = ?"
-        )
-        .bind(id)
-        .fetch_one(&db)
-        .await
-        .map_err(|e| e.to_string())?;
-
-        return Ok(Json(photo));
+        match field.name() {
+            Some("file") => {
+                filename = field.file_name().unwrap_or("file.jpg").to_string();
+                let data = field.bytes().await.map_err(|e| e.to_string())?;
+                let filepath = format!("images/{}", filename);
+                tokio::fs::write(&filepath, &data).await.map_err(|e| e.to_string())?;
+            },
+            Some("description") => {
+                description = String::from_utf8(field.bytes().await.map_err(|e| e.to_string())?.to_vec()).unwrap_or_default();
+            },
+            Some("category") => {
+                category = String::from_utf8(field.bytes().await.map_err(|e| e.to_string())?.to_vec()).unwrap_or("autre".to_string());
+            },
+            _ => {}
+        }
     }
 
-    Err("Aucun fichier reçu".to_string())
+    // Insert dans la BDD
+    let result = sqlx::query(
+        "INSERT INTO photos (filename, description, category) VALUES (?, ?, ?)",
+    )
+    .bind(&filename)
+    .bind(&description)
+    .bind(&category)
+    .execute(&db)
+    .await
+    .map_err(|e| e.to_string())?;
+
+    let id = result.last_insert_rowid();
+
+    let photo = sqlx::query_as::<_, Photo>(
+        "SELECT id, filename, description, category FROM photos WHERE id = ?"
+    )
+    .bind(id)
+    .fetch_one(&db)
+    .await
+    .map_err(|e| e.to_string())?;
+
+    Ok(Json(photo))
 }
+
 
 
 
