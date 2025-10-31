@@ -1,7 +1,7 @@
 use axum::{
     extract::{State, Form}, // Ajout de TypedHeader pour récupérer le cookie
     routing::{get, post},
-    Json, Router,
+    Router,
     response::{Html}, // Ajout de IntoResponse et Redirect pour gérer cookie + redirection
 };
 use sqlx::{prelude::FromRow, SqlitePool};
@@ -9,6 +9,7 @@ use serde::{Serialize, Deserialize};
 use tower_http::services::ServeDir;
 use axum::extract::{Multipart, DefaultBodyLimit};
 use tower_cookies::{CookieManagerLayer,Cookies,Cookie};
+use axum::response::Redirect;
 
 
 
@@ -906,7 +907,7 @@ async fn upload_photo(
     cookies: Cookies,
     State(db): State<SqlitePool>,
     mut multipart: Multipart,
-) -> Result<Json<Photo>, String> {
+) -> Result<Redirect, String> {
 
     let is_admin = cookies.get("is_admin").map(|c| c.value() == "true").unwrap_or(false);
     if !is_admin {
@@ -936,7 +937,7 @@ async fn upload_photo(
     }
 
     // Insert dans la BDD
-    let result = sqlx::query(
+    sqlx::query(
         "INSERT INTO photos (filename, description, category) VALUES (?, ?, ?)",
     )
     .bind(&filename)
@@ -946,17 +947,7 @@ async fn upload_photo(
     .await
     .map_err(|e| e.to_string())?;
 
-    let id = result.last_insert_rowid();
-
-    let photo = sqlx::query_as::<_, Photo>(
-        "SELECT id, filename, description, category FROM photos WHERE id = ?"
-    )
-    .bind(id)
-    .fetch_one(&db)
-    .await
-    .map_err(|e| e.to_string())?;
-
-    Ok(Json(photo))
+    Ok(Redirect::to("/photo_admin"))
 }
 
 
@@ -966,7 +957,7 @@ async fn supp_photo(
     cookies: Cookies,
     State(db): State<SqlitePool>,
     Form(payload): Form<DeletePhoto>,
-) -> Result<Html<String>, String> {
+) -> Result<Redirect, String> {
 
     let is_admin = cookies.get("is_admin").map(|c| c.value() == "true").unwrap_or(false);
     if !is_admin {
@@ -981,5 +972,5 @@ async fn supp_photo(
     if tokio::fs::remove_file(&filepath).await.is_err() {
         return Err("Erreur lors de la suppression du fichier".to_string());
     }
-    return Ok(Html("<script>window.location='/photo_admin'</script>".to_string()));
+    Ok(Redirect::to("/homepage_admin"))
 }  
