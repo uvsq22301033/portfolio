@@ -222,15 +222,14 @@ async fn homepage_invite() -> Html<String> {
                 Bienvenue voyageur !
                 </p>
                 <p style="font-size:18px; color:#555; margin-bottom:15px;">
-                    Ayant fais l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
-                    Ce site à été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
+                    Ayant fait l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
+                    Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
                 <p style="font-size:18px; color:#0056b3; margin-bottom:15px;">
                     Bienvenue dans mon univers et bonne visite !
                 </p>
                 <img src="/images/banniere.jpg" alt="bannière" width="600"/>
-                
-                <!-- 🔹 CHANGEMENT : mise des boutons dans un div centré sous l'image -->
+                 
                 <div class="button-container">
                     <a href="/photo_invite"><button>Voir les photos</button></a>
                     <a href="/"><button>Identification</button></a>
