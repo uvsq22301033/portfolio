@@ -83,7 +83,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        background-color: #fafafa;
+                        background-color: #f7e3cdff;
                         text-align: center;
                         margin: 20px;
                         padding: 0;
@@ -93,9 +93,9 @@ async fn identification(cookies: Cookies) -> Html<String> {
                         margin-bottom: 30px;
                     }
                     button {
-                        background-color: #007BFF;
+                        background-color: #f87a36ff;
                         border: none;
-                        color: white;
+                        color: black;
                         padding: 0.8em 1.5em;
                         font-size: 0.9em;
                         border-radius: 6px;
@@ -197,18 +197,18 @@ async fn homepage_invite() -> Html<String> {
                 <style>
                     body { 
                         font-family: Arial, sans-serif; 
-                        background-color: #fafafa; 
+                        background-color: #f7e3cdff; 
                         text-align: center; 
                         margin: 20px;
                         padding: 0;
                     }
                     h1 { 
-                        color: #333; 
+                        color: #000000ff; 
                         margin-bottom: 20px;
                     }
                     p {
                         font-size: 1em;
-                        color: #555;
+                        color: #000000ff;
                         margin: 10px auto;
                         max-width: 600px;
                         line-height: 1.5;
@@ -227,9 +227,9 @@ async fn homepage_invite() -> Html<String> {
                         flex-wrap: wrap; /* 🔹 pour que les boutons passent à la ligne sur mobile */
                     }
                     button {
-                        background-color: #007BFF;
+                        background-color: #f87a36ff;
                         border: none;
-                        color: white;
+                        color: black;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
                         border-radius: 6px;
@@ -256,8 +256,8 @@ async fn homepage_invite() -> Html<String> {
                     Ayant fait l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
                     Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
-                <p style="color:#FF0000;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
-                <p style="color:#0056b3;">Bienvenue dans mon univers et bonne visite !</p>
+                <p style="color: red ;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
+                <p style="color: red ;">Bienvenue dans mon univers et bonne visite !</p>
                 <img src="/images/banniere.jpg" alt="bannière"/>
                  
                 <div class="button-container">
@@ -284,7 +284,7 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        background-color: #fafafa;
+                        background-color: #f6d0a5ff;
                         text-align: center;
                         padding: 40px;
                     }
@@ -358,7 +358,7 @@ async fn tout_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f0f2f5;
+                        background-color: #f7e3cdff;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -376,7 +376,7 @@ async fn tout_photos_invite(
                         padding: 20px;
                     }
                     .photo-card {
-                        background: white;
+                        background: #f87a36ff;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
                         width: 90%; /* 🔹 width responsive */
@@ -407,7 +407,7 @@ async fn tout_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #007BFF;
+                        background-color: #f87a36ff;
                         border: none;
                         color: white;
                         padding: 0.8em 1.5em;
@@ -504,7 +504,7 @@ async fn portrait_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f0f2f5;
+                        background-color: #f7e3cdff;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -522,7 +522,7 @@ async fn portrait_photos_invite(
                         padding: 20px;
                     }
                     .photo-card {
-                        background: white;
+                        background: #f87a36ff;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
                         width: 90%; /* 🔹 width responsive */
@@ -553,7 +553,7 @@ async fn portrait_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #007BFF;
+                        background-color: #f87a36ff;
                         border: none;
                         color: white;
                         padding: 0.8em 1.5em;
@@ -646,7 +646,7 @@ async fn animaux_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f0f2f5;
+                        background-color: #f7e3cdff;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -664,7 +664,7 @@ async fn animaux_photos_invite(
                         padding: 20px;
                     }
                     .photo-card {
-                        background: white;
+                        background: #f87a36ff;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
                         width: 90%; /* 🔹 width responsive */
@@ -695,7 +695,7 @@ async fn animaux_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #007BFF;
+                        background-color: #f87a36ff;
                         border: none;
                         color: white;
                         padding: 0.8em 1.5em;
@@ -787,7 +787,7 @@ async fn paysage_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f0f2f5;
+                        background-color: #f7e3cdff;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -805,7 +805,7 @@ async fn paysage_photos_invite(
                         padding: 20px;
                     }
                     .photo-card {
-                        background: white;
+                        background: #f87a36ff;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
                         width: 90%; /* 🔹 width responsive */
@@ -836,7 +836,7 @@ async fn paysage_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #007BFF;
+                        background-color: #f87a36ff;
                         border: none;
                         color: white;
                         padding: 0.8em 1.5em;
