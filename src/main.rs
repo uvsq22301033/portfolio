@@ -66,7 +66,7 @@ async fn main() {
     .layer(CookieManagerLayer::new());
 
     // Define the address for the server and run the server
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("192.168.1.18:3000").await.unwrap();
     println!("listening on http://{}", listener.local_addr().unwrap());
     axum::serve(listener, app).await.unwrap();
 }
@@ -78,13 +78,15 @@ async fn identification(cookies: Cookies) -> Html<String> {
     let html = r#"
         <html>
             <head>
-                <!-- 🔹 CHANGEMENT : style global -->
+                <!-- 🔹 CHANGEMENT : style global et responsive -->
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: Arial, sans-serif;
                         background-color: #fafafa;
                         text-align: center;
-                        margin: 50px;
+                        margin: 20px;
+                        padding: 0;
                     }
                     h1 {
                         color: #333;
@@ -94,8 +96,8 @@ async fn identification(cookies: Cookies) -> Html<String> {
                         background-color: #007BFF;
                         border: none;
                         color: white;
-                        padding: 10px 20px;
-                        font-size: 16px;
+                        padding: 0.8em 1.5em;
+                        font-size: 0.9em;
                         border-radius: 6px;
                         margin: 5px;
                         cursor: pointer;
@@ -110,14 +112,23 @@ async fn identification(cookies: Cookies) -> Html<String> {
                         border-radius: 6px;
                         border: 1px solid #ccc;
                         margin: 5px 0;
-                        width: 200px;
+                        width: 80%;
+                        max-width: 250px;
                     }
                     form {
-                        display: inline-block; /* 🔹 centrer le formulaire */
+                        display: inline-block; /* 🔹 centre le formulaire */
                         margin-top: 20px;
                     }
                     .button-container {
-                        margin-top: 20px;
+                        margin-bottom: 20px;
+                    }
+                    @media (max-width: 500px) {
+                        button {
+                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                        }
+                        input[type="password"] {
+                            width: 80%; /* 🔹 input adaptatif */
+                        }
                     }
                 </style>
             </head>
@@ -139,6 +150,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
     "#;
     Html(html.to_string())
 }
+
 
 
 #[axum::debug_handler]
@@ -180,56 +192,73 @@ async fn homepage_invite() -> Html<String> {
     let html = r#"
         <html>
             <head>
-                <!-- 🔹 CHANGEMENT : ajout de style global -->
+                <!-- 🔹 CHANGEMENT : style global et responsive -->
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body { 
                         font-family: Arial, sans-serif; 
                         background-color: #fafafa; 
                         text-align: center; 
-                        margin: 40px;
+                        margin: 20px;
+                        padding: 0;
                     }
-                    h1 { color: #333; }
+                    h1 { 
+                        color: #333; 
+                        margin-bottom: 20px;
+                    }
+                    p {
+                        font-size: 1em;
+                        color: #555;
+                        margin: 10px auto;
+                        max-width: 600px;
+                        line-height: 1.5;
+                    }
+                    img {
+                        width: 80%; /* 🔹 image responsive */
+                        max-width: 600px;
+                        margin: 15px 0;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                    }
+                    .button-container {
+                        margin-top: 20px;
+                        display: flex;
+                        justify-content: center;
+                        gap: 10px;
+                        flex-wrap: wrap; /* 🔹 pour que les boutons passent à la ligne sur mobile */
+                    }
                     button {
                         background-color: #007BFF;
                         border: none;
                         color: white;
-                        padding: 10px 20px;
-                        text-align: center;
-                        text-decoration: none;
-                        font-size: 16px;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
                         border-radius: 6px;
-                        margin: 5px;
                         cursor: pointer;
+                        transition: background-color 0.3s;
                     }
                     button:hover {
                         background-color: #0056b3;
                     }
-                    img {
-                        border-radius: 8px;
-                        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-                        margin: 15px;
-                    }
-                    .button-container {  /* 🔹 CHANGEMENT : conteneur pour les boutons */
-                        margin-top: 20px;
-                        display: flex;
-                        justify-content: center;
-                        gap: 10px;  /* espace entre les boutons */
+                    @media (max-width: 500px) {
+                        button {
+                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                        }
+                        img {
+                            width: 95%; /* 🔹 image presque pleine largeur sur mobile */
+                        }
                     }
                 </style>
             </head>
             <body>
                 <h1>Bienvenue sur mon portfolio !</h1>
-                <p style="font-size:18px; color:#555; margin-bottom:15px;">
-                Bienvenue voyageur !
-                </p>
-                <p style="font-size:18px; color:#555; margin-bottom:15px;">
+                <p>Bienvenue voyageur !</p>
+                <p>
                     Ayant fait l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
                     Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
-                <p style="font-size:18px; color:#0056b3; margin-bottom:15px;">
-                    Bienvenue dans mon univers et bonne visite !
-                </p>
-                <img src="/images/banniere.jpg" alt="bannière" width="600"/>
+                <p style="color:#FF0000;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
+                <p style="color:#0056b3;">Bienvenue dans mon univers et bonne visite !</p>
+                <img src="/images/banniere.jpg" alt="bannière"/>
                  
                 <div class="button-container">
                     <a href="/photo_invite"><button>Voir les photos</button></a>
@@ -325,6 +354,7 @@ async fn tout_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -336,7 +366,7 @@ async fn tout_photos_invite(
                     h1 {
                         color: #222;
                         margin: 30px 0;
-                        font-size: 2.5em;
+                        font-size: 2em;
                     }
                     .gallery {
                         display: flex;
@@ -349,7 +379,8 @@ async fn tout_photos_invite(
                         background: white;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 700px;
+                        width: 90%; /* 🔹 width responsive */
+                        max-width: 700px; /* 🔹 limite sur desktop */
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
@@ -360,7 +391,7 @@ async fn tout_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
+                        border-radius: 0; /* 🔹 pas de bords arrondis */
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -375,44 +406,49 @@ async fn tout_photos_invite(
                         color: #333;
                     }
                     .btn {
-                        margin: 10px 5px;
+                        margin: 5px;
                         background-color: #007BFF;
                         border: none;
                         color: white;
-                        padding: 10px 20px;
-                        font-size: 16px;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
                         border-radius: 6px;
-                        display: inline-block; /* 🔹 évite les chevauchements */
+                        display: inline-block;
+                        transition: background-color 0.3s;
                     }
                     .btn:hover {
                         background-color: #0056b3;
                     }
-                    /* 🔹 Conteneur boutons d’action */
                     .actions {
-                        margin-bottom: 20px;
+                        margin: 20px 0;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        gap: 10px; /* espace entre les lignes */
+                        gap: 10px;
                     }
-                    /* 🔹 Ligne spéciale pour filtres */
                     .filters {
                         display: flex;
                         justify-content: center;
                         flex-wrap: wrap;
                         gap: 10px;
                     }
+                    @media (max-width: 600px) {
+                        .btn {
+                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                        }
+                        .photo-card {
+                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                        }
+                    }
                 </style>
             </head>
             <body>
                 <h1>Galerie</h1>
 
-                <!-- 🔹 Nouvelle structure pour les boutons -->
                 <div class='actions'>
                     <a class='btn' href='/homepage_invite'>Accueil</a>
-
                     <div class='filters'>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
@@ -449,6 +485,7 @@ async fn tout_photos_invite(
 
 
 
+
 async fn portrait_photos_invite(
     State(db): State<SqlitePool>,
 ) -> Result<Html<String>, axum::http::StatusCode> {
@@ -463,6 +500,7 @@ async fn portrait_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -474,7 +512,7 @@ async fn portrait_photos_invite(
                     h1 {
                         color: #222;
                         margin: 30px 0;
-                        font-size: 2.5em;
+                        font-size: 2em;
                     }
                     .gallery {
                         display: flex;
@@ -487,7 +525,8 @@ async fn portrait_photos_invite(
                         background: white;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 700px;
+                        width: 90%; /* 🔹 width responsive */
+                        max-width: 700px; /* 🔹 limite sur desktop */
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
@@ -498,7 +537,7 @@ async fn portrait_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
+                        border-radius: 0; /* 🔹 pas de bords arrondis */
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -513,46 +552,51 @@ async fn portrait_photos_invite(
                         color: #333;
                     }
                     .btn {
-                        margin: 10px 5px;
+                        margin: 5px;
                         background-color: #007BFF;
                         border: none;
                         color: white;
-                        padding: 10px 20px;
-                        font-size: 16px;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
                         border-radius: 6px;
-                        display: inline-block; /* 🔹 évite les chevauchements */
+                        display: inline-block;
+                        transition: background-color 0.3s;
                     }
                     .btn:hover {
                         background-color: #0056b3;
                     }
-                    /* 🔹 Conteneur boutons d’action */
                     .actions {
-                        margin-bottom: 20px;
+                        margin: 20px 0;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        gap: 10px; /* espace entre les lignes */
+                        gap: 10px;
                     }
-                    /* 🔹 Ligne spéciale pour filtres */
                     .filters {
                         display: flex;
                         justify-content: center;
                         flex-wrap: wrap;
                         gap: 10px;
                     }
+                    @media (max-width: 600px) {
+                        .btn {
+                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                        }
+                        .photo-card {
+                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                        }
+                    }
                 </style>
             </head>
             <body>
                 <h1>Galerie</h1>
 
-                <!-- 🔹 Nouvelle structure pour les boutons -->
                 <div class='actions'>
                     <a class='btn' href='/homepage_invite'>Accueil</a>
-
                     <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tous</a>
+                        <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/paysage'>Paysage</a>
                     </div>
@@ -598,6 +642,7 @@ async fn animaux_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -609,7 +654,7 @@ async fn animaux_photos_invite(
                     h1 {
                         color: #222;
                         margin: 30px 0;
-                        font-size: 2.5em;
+                        font-size: 2em;
                     }
                     .gallery {
                         display: flex;
@@ -622,7 +667,8 @@ async fn animaux_photos_invite(
                         background: white;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 700px;
+                        width: 90%; /* 🔹 width responsive */
+                        max-width: 700px; /* 🔹 limite sur desktop */
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
@@ -633,7 +679,7 @@ async fn animaux_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
+                        border-radius: 0; /* 🔹 pas de bords arrondis */
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -648,46 +694,51 @@ async fn animaux_photos_invite(
                         color: #333;
                     }
                     .btn {
-                        margin: 10px 5px;
+                        margin: 5px;
                         background-color: #007BFF;
                         border: none;
                         color: white;
-                        padding: 10px 20px;
-                        font-size: 16px;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
                         border-radius: 6px;
-                        display: inline-block; /* 🔹 évite les chevauchements */
+                        display: inline-block;
+                        transition: background-color 0.3s;
                     }
                     .btn:hover {
                         background-color: #0056b3;
                     }
-                    /* 🔹 Conteneur boutons d’action */
                     .actions {
-                        margin-bottom: 20px;
+                        margin: 20px 0;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        gap: 10px; /* espace entre les lignes */
+                        gap: 10px;
                     }
-                    /* 🔹 Ligne spéciale pour filtres */
                     .filters {
                         display: flex;
                         justify-content: center;
                         flex-wrap: wrap;
                         gap: 10px;
                     }
+                    @media (max-width: 600px) {
+                        .btn {
+                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                        }
+                        .photo-card {
+                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                        }
+                    }
                 </style>
             </head>
             <body>
                 <h1>Galerie</h1>
 
-                <!-- 🔹 Nouvelle structure pour les boutons -->
                 <div class='actions'>
                     <a class='btn' href='/homepage_invite'>Accueil</a>
-
                     <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tous</a>
+                        <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
                         <a class='btn' href='/photo_invite/paysage'>Paysage</a>
                     </div>
@@ -732,6 +783,7 @@ async fn paysage_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -743,7 +795,7 @@ async fn paysage_photos_invite(
                     h1 {
                         color: #222;
                         margin: 30px 0;
-                        font-size: 2.5em;
+                        font-size: 2em;
                     }
                     .gallery {
                         display: flex;
@@ -756,7 +808,8 @@ async fn paysage_photos_invite(
                         background: white;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 700px;
+                        width: 90%; /* 🔹 width responsive */
+                        max-width: 700px; /* 🔹 limite sur desktop */
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
@@ -767,7 +820,7 @@ async fn paysage_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
+                        border-radius: 0; /* 🔹 pas de bords arrondis */
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -782,46 +835,51 @@ async fn paysage_photos_invite(
                         color: #333;
                     }
                     .btn {
-                        margin: 10px 5px;
+                        margin: 5px;
                         background-color: #007BFF;
                         border: none;
                         color: white;
-                        padding: 10px 20px;
-                        font-size: 16px;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
                         border-radius: 6px;
-                        display: inline-block; /* 🔹 évite les chevauchements */
+                        display: inline-block;
+                        transition: background-color 0.3s;
                     }
                     .btn:hover {
                         background-color: #0056b3;
                     }
-                    /* 🔹 Conteneur boutons d’action */
                     .actions {
-                        margin-bottom: 20px;
+                        margin: 20px 0;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        gap: 10px; /* espace entre les lignes */
+                        gap: 10px;
                     }
-                    /* 🔹 Ligne spéciale pour filtres */
                     .filters {
                         display: flex;
                         justify-content: center;
                         flex-wrap: wrap;
                         gap: 10px;
                     }
+                    @media (max-width: 600px) {
+                        .btn {
+                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                        }
+                        .photo-card {
+                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                        }
+                    }
                 </style>
             </head>
             <body>
                 <h1>Galerie</h1>
 
-                <!-- 🔹 Nouvelle structure pour les boutons -->
                 <div class='actions'>
                     <a class='btn' href='/homepage_invite'>Accueil</a>
-
                     <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tous</a>
+                        <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
                     </div>
