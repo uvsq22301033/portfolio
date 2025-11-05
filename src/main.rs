@@ -66,7 +66,7 @@ async fn main() {
     .layer(CookieManagerLayer::new());
 
     // Define the address for the server and run the server
-    let listener = tokio::net::TcpListener::bind("192.168.1.18:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     println!("listening on http://{}", listener.local_addr().unwrap());
     axum::serve(listener, app).await.unwrap();
 }
@@ -343,7 +343,6 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
 async fn tout_photos_invite(
     State(db): State<SqlitePool>,
 ) -> Result<Html<String>, axum::http::StatusCode> {
-
     let rows = sqlx::query_as::<_, Photo>(
         r#"SELECT id, filename, description, category FROM photos"#
     )
@@ -379,9 +378,10 @@ async fn tout_photos_invite(
                         background: #f87a36ff;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 90%; /* 🔹 width responsive */
-                        max-width: 700px; /* 🔹 limite sur desktop */
+                        width: 90%;
+                        max-width: 700px;
                         transition: transform 0.3s, box-shadow 0.3s;
+                        cursor: pointer;
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
@@ -391,7 +391,7 @@ async fn tout_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0; /* 🔹 pas de bords arrondis */
+                        border-radius: 0;
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -436,11 +436,31 @@ async fn tout_photos_invite(
                     }
                     @media (max-width: 600px) {
                         .btn {
-                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                            width: 80%;
                         }
                         .photo-card {
-                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                            width: 95%;
                         }
+                    }
+
+                    /* 🔹 Agrandissement */
+                    .overlay {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .overlay img {
+                        max-width: 95%;
+                        max-height: 90%;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
                     }
                 </style>
             </head>
@@ -462,7 +482,7 @@ async fn tout_photos_invite(
     for photo in rows {
         html.push_str(&format!(
             r#"
-                <div class='photo-card'>
+                <div class='photo-card' onclick="openImage('/images/{0}')">
                     <img src='/images/{0}' alt='{1}'/>
                     <div class='desc'>
                         <p><span>Catégorie:</span> {1}</p>
@@ -476,10 +496,29 @@ async fn tout_photos_invite(
         ));
     }
 
-    html.push_str("</div></body></html>");
+    html.push_str(r#"
+                </div>
+                <div class="overlay" id="overlay" onclick="closeImage()">
+                    <img id="overlay-img" src="" alt=""/>
+                </div>
+                <script>
+                    function openImage(src) {
+                        const overlay = document.getElementById('overlay');
+                        const img = document.getElementById('overlay-img');
+                        img.src = src;
+                        overlay.style.display = 'flex';
+                    }
+                    function closeImage() {
+                        document.getElementById('overlay').style.display = 'none';
+                    }
+                </script>
+            </body>
+        </html>
+    "#);
 
     Ok(Html(html))
 }
+
 
 
 
@@ -525,8 +564,8 @@ async fn portrait_photos_invite(
                         background: #f87a36ff;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 90%; /* 🔹 width responsive */
-                        max-width: 700px; /* 🔹 limite sur desktop */
+                        width: 90%;
+                        max-width: 700px;
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
@@ -537,7 +576,9 @@ async fn portrait_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0; /* 🔹 pas de bords arrondis */
+                        border-radius: 0;
+                        cursor: pointer;
+                        transition: transform 0.3s ease;
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -582,16 +623,48 @@ async fn portrait_photos_invite(
                     }
                     @media (max-width: 600px) {
                         .btn {
-                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                            width: 80%;
                         }
                         .photo-card {
-                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                            width: 95%;
                         }
                     }
                 </style>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const images = document.querySelectorAll(".photo-card img");
+                        images.forEach(img => {
+                            img.addEventListener("click", () => {
+                                const overlay = document.createElement("div");
+                                overlay.style.position = "fixed";
+                                overlay.style.top = 0;
+                                overlay.style.left = 0;
+                                overlay.style.width = "100%";
+                                overlay.style.height = "100%";
+                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
+                                overlay.style.display = "flex";
+                                overlay.style.alignItems = "center";
+                                overlay.style.justifyContent = "center";
+                                overlay.style.zIndex = "1000";
+
+                                const bigImg = document.createElement("img");
+                                bigImg.src = img.src;
+                                bigImg.style.maxWidth = "95%";
+                                bigImg.style.maxHeight = "95%";
+                                bigImg.style.borderRadius = "10px";
+                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
+                                overlay.appendChild(bigImg);
+
+                                overlay.addEventListener("click", () => overlay.remove());
+                                document.body.appendChild(overlay);
+                            });
+                        });
+                    });
+                </script>
             </head>
             <body>
-                <h1>Galerie</h1>
+                <h1>Galerie - Portrait</h1>
 
                 <div class='actions'>
                     <a class='btn' href='/homepage_invite'>Accueil</a>
@@ -667,9 +740,10 @@ async fn animaux_photos_invite(
                         background: #f87a36ff;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                         overflow: hidden;
-                        width: 90%; /* 🔹 width responsive */
-                        max-width: 700px; /* 🔹 limite sur desktop */
+                        width: 90%;
+                        max-width: 700px;
                         transition: transform 0.3s, box-shadow 0.3s;
+                        cursor: pointer; /* 🔹 clic actif */
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
@@ -679,7 +753,7 @@ async fn animaux_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0; /* 🔹 pas de bords arrondis */
+                        border-radius: 0;
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -724,16 +798,36 @@ async fn animaux_photos_invite(
                     }
                     @media (max-width: 600px) {
                         .btn {
-                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                            width: 80%;
                         }
                         .photo-card {
-                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                            width: 95%;
                         }
+                    }
+
+                    /* 🔹 Overlay pour zoom image */
+                    .overlay {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.85);
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .overlay img {
+                        max-width: 95%;
+                        max-height: 90%;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
                     }
                 </style>
             </head>
             <body>
-                <h1>Galerie</h1>
+                <h1>Galerie - Animaux</h1>
 
                 <div class='actions'>
                     <a class='btn' href='/homepage_invite'>Accueil</a>
@@ -750,7 +844,7 @@ async fn animaux_photos_invite(
     for photo in rows {
         html.push_str(&format!(
             r#"
-                <div class='photo-card'>
+                <div class='photo-card' onclick="openImage('/images/{0}')">
                     <img src='/images/{0}' alt='{1}'/>
                     <div class='desc'>
                         <p><span>Catégorie:</span> {1}</p>
@@ -764,10 +858,32 @@ async fn animaux_photos_invite(
         ));
     }
 
-    html.push_str("</div></body></html>");
+    html.push_str(r#"
+                </div>
+
+                <!-- 🔹 Fenêtre d’image agrandie -->
+                <div class="overlay" id="overlay" onclick="closeImage()">
+                    <img id="overlay-img" src="" alt=""/>
+                </div>
+
+                <script>
+                    function openImage(src) {
+                        const overlay = document.getElementById('overlay');
+                        const img = document.getElementById('overlay-img');
+                        img.src = src;
+                        overlay.style.display = 'flex';
+                    }
+                    function closeImage() {
+                        document.getElementById('overlay').style.display = 'none';
+                    }
+                </script>
+            </body>
+        </html>
+    "#);
 
     Ok(Html(html))
 }
+
 
 async fn paysage_photos_invite(
     State(db): State<SqlitePool>,
@@ -820,7 +936,9 @@ async fn paysage_photos_invite(
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0; /* 🔹 pas de bords arrondis */
+                        border-radius: 0;
+                        cursor: pointer;
+                        transition: transform 0.3s ease;
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -865,16 +983,48 @@ async fn paysage_photos_invite(
                     }
                     @media (max-width: 600px) {
                         .btn {
-                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                            width: 80%;
                         }
                         .photo-card {
-                            width: 95%; /* 🔹 photos presque pleine largeur sur mobile */
+                            width: 95%;
                         }
                     }
                 </style>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const images = document.querySelectorAll(".photo-card img");
+                        images.forEach(img => {
+                            img.addEventListener("click", () => {
+                                const overlay = document.createElement("div");
+                                overlay.style.position = "fixed";
+                                overlay.style.top = 0;
+                                overlay.style.left = 0;
+                                overlay.style.width = "100%";
+                                overlay.style.height = "100%";
+                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
+                                overlay.style.display = "flex";
+                                overlay.style.alignItems = "center";
+                                overlay.style.justifyContent = "center";
+                                overlay.style.zIndex = "1000";
+
+                                const bigImg = document.createElement("img");
+                                bigImg.src = img.src;
+                                bigImg.style.maxWidth = "95%";
+                                bigImg.style.maxHeight = "95%";
+                                bigImg.style.borderRadius = "10px";
+                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
+                                overlay.appendChild(bigImg);
+
+                                overlay.addEventListener("click", () => overlay.remove());
+                                document.body.appendChild(overlay);
+                            });
+                        });
+                    });
+                </script>
             </head>
             <body>
-                <h1>Galerie</h1>
+                <h1>Galerie - Paysage</h1>
 
                 <div class='actions'>
                     <a class='btn' href='/homepage_invite'>Accueil</a>
@@ -911,6 +1061,7 @@ async fn paysage_photos_invite(
 }
 
 
+
 async fn get_photos_admin(
     cookies: Cookies,
     State(db): State<SqlitePool>,
@@ -931,7 +1082,7 @@ async fn get_photos_admin(
     <html>
         <body>
             <h1>Photos</h1>
-            <form action="/homepage_admin">
+            <form action="/photo_admin">
                 <button>Accueil</button>
             </form>
     "#);
@@ -1005,7 +1156,7 @@ async fn upload_photo(
     .await
     .map_err(|e| e.to_string())?;
 
-    Ok(Redirect::to("/photo_admin"))
+    Ok(Redirect::to("/homepage_admin"))
 }
 
 
