@@ -23,7 +23,6 @@ struct PasswordForm {
 
 #[derive(Serialize, FromRow)]
 struct Photo {
-    id: i32,
     filename: String,
     description: String,
     category: String, // 🔹 nouvelle colonne
@@ -31,7 +30,6 @@ struct Photo {
 
 #[derive(Deserialize)]
 struct DeletePhoto {
-    id: i32,
     filename: String,
 }
 
@@ -344,7 +342,7 @@ async fn tout_photos_invite(
     State(db): State<SqlitePool>,
 ) -> Result<Html<String>, axum::http::StatusCode> {
     let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT id, filename, description, category FROM photos"#
+        r#"SELECT filename, description, category FROM photos"#
     )
     .fetch_all(&db)
     .await
@@ -530,7 +528,7 @@ async fn portrait_photos_invite(
 ) -> Result<Html<String>, axum::http::StatusCode> {
 
     let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT id, filename, description, category FROM photos WHERE category = 'portrait'"#
+        r#"SELECT filename, description, category FROM photos WHERE category = 'portrait'"#
     )
     .fetch_all(&db)
     .await
@@ -706,7 +704,7 @@ async fn animaux_photos_invite(
 ) -> Result<Html<String>, axum::http::StatusCode> {
 
     let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT id, filename, description, category FROM photos WHERE category = 'animaux'"#
+        r#"SELECT filename, description, category FROM photos WHERE category = 'animaux'"#
     )
     .fetch_all(&db)
     .await
@@ -890,7 +888,7 @@ async fn paysage_photos_invite(
 ) -> Result<Html<String>, axum::http::StatusCode> {
 
     let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT id, filename, description, category FROM photos WHERE category = 'paysage'"#
+        r#"SELECT filename, description, category FROM photos WHERE category = 'paysage'"#
     )
     .fetch_all(&db)
     .await
@@ -1072,7 +1070,7 @@ async fn get_photos_admin(
     }
 
     let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT id, filename, description, category FROM photos"#
+        r#"SELECT filename, description, category FROM photos"#
     )
     .fetch_all(&db)
     .await
@@ -1082,7 +1080,7 @@ async fn get_photos_admin(
     <html>
         <body>
             <h1>Photos</h1>
-            <form action="/photo_admin">
+            <form action="/homepage_admin">
                 <button>Accueil</button>
             </form>
     "#);
@@ -1095,14 +1093,13 @@ async fn get_photos_admin(
                 <p>{1}</p>
 
                 <form action="/delete" method="post">
-                    <input type="hidden" name="id" value="{2}" />
                     <input type="hidden" name="filename" value="{0}" />
                     <button type="submit">Supprimer</button>
                 </form>
             </div>
             <hr/>
             "#,
-            photo.filename, photo.description, photo.id
+            photo.filename, photo.description
         ));
     }
     html.push_str("</body></html>");
@@ -1172,8 +1169,8 @@ async fn supp_photo(
     if !is_admin {
         return Err("Accès refusé".to_string());
     }
-    sqlx::query("DELETE FROM photos WHERE id = ?")
-        .bind(payload.id)
+    sqlx::query("DELETE FROM photos WHERE filename = ?")
+        .bind(&payload.filename)
         .execute(&db)
         .await
         .map_err(|e| e.to_string())?;
