@@ -10,8 +10,7 @@ use tower_http::services::ServeDir;
 use axum::extract::{Multipart, DefaultBodyLimit};
 use tower_cookies::{CookieManagerLayer,Cookies,Cookie};
 use axum::response::Redirect;
-
-
+use sha2::{Sha256, Digest};
 
 
 
@@ -81,7 +80,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        background-color: #f7e3cdff;
+                        background-color: #d8d8d0;
                         text-align: center;
                         margin: 20px;
                         padding: 0;
@@ -91,18 +90,18 @@ async fn identification(cookies: Cookies) -> Html<String> {
                         margin-bottom: 30px;
                     }
                     button {
-                        background-color: #f87a36ff;
+                        background-color: #d8d8d3;
                         border: none;
                         color: black;
                         padding: 0.8em 1.5em;
                         font-size: 0.9em;
-                        border-radius: 6px;
+                        border-radius: 4px;
                         margin: 5px;
                         cursor: pointer;
                         transition: background-color 0.3s;
                     }
                     button:hover {
-                        background-color: #0056b3;
+                        background-color: #c6c6c0;
                     }
                     input[type="password"] {
                         padding: 10px;
@@ -195,7 +194,7 @@ async fn homepage_invite() -> Html<String> {
                 <style>
                     body { 
                         font-family: Arial, sans-serif; 
-                        background-color: #f7e3cdff; 
+                        background-color: #d8d8d0; 
                         text-align: center; 
                         margin: 20px;
                         padding: 0;
@@ -215,7 +214,7 @@ async fn homepage_invite() -> Html<String> {
                         width: 80%; /* 🔹 image responsive */
                         max-width: 600px;
                         margin: 15px 0;
-                        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
                     }
                     .button-container {
                         margin-top: 20px;
@@ -225,17 +224,17 @@ async fn homepage_invite() -> Html<String> {
                         flex-wrap: wrap; /* 🔹 pour que les boutons passent à la ligne sur mobile */
                     }
                     button {
-                        background-color: #f87a36ff;
+                        background-color: #d8d8d0;
                         border: none;
                         color: black;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
-                        border-radius: 6px;
+                        border-radius: 4px;
                         cursor: pointer;
                         transition: background-color 0.3s;
                     }
                     button:hover {
-                        background-color: #0056b3;
+                        background-color: #c6c6c0;
                     }
                     @media (max-width: 500px) {
                         button {
@@ -254,8 +253,8 @@ async fn homepage_invite() -> Html<String> {
                     Ayant fait l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
                     Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
-                <p style="color: red ;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
-                <p style="color: red ;">Bienvenue dans mon univers et bonne visite !</p>
+                <p style="color: #666;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
+                <p style="color: #666;">Bienvenue et bonne visite !</p>
                 <img src="/images/banniere.jpg" alt="bannière"/>
                  
                 <div class="button-container">
@@ -282,34 +281,34 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        background-color: #f6d0a5ff;
+                        background-color: #d8d8d0;
                         text-align: center;
                         padding: 40px;
                     }
                     form {
-                        background-color: #fff;
+                        background-color: #ffffff;
                         padding: 20px;
-                        border-radius: 10px;
-                        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                        border-radius: 6px;
+                        box-shadow: 0 10px 28px rgba(0,0,0,0.08);
                         display: inline-block;
                         margin-bottom: 20px;
                     }
                     input, select, button, textarea {
                         margin: 10px;
                         padding: 10px;
-                        border-radius: 5px;
+                        border-radius: 4px;
                         border: 1px solid #ccc;
                         width: 80%;
                         max-width: 300px;
                     }
                     button {
-                        background-color: #007BFF;
-                        color: white;
+                        background-color: #d8d8d0;
+                        color: #222;
                         border: none;
                         cursor: pointer;
                     }
                     button:hover {
-                        background-color: #0056b3;
+                        background-color: #c6c6c0;
                     }
                 </style>
             </head>
@@ -355,7 +354,7 @@ async fn tout_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f7e3cdff;
+                        background-color: #d8d8d0;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -366,24 +365,26 @@ async fn tout_photos_invite(
                         font-size: 2em;
                     }
                     .gallery {
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: center;
-                        gap: 20px;
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
                         padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
                     }
                     .photo-card {
-                        background: #f87a36ff;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 90%;
-                        max-width: 700px;
+                        width: 100%;
+                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer;
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
-                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
                     .photo-card img {
                         width: 100%;
@@ -397,7 +398,7 @@ async fn tout_photos_invite(
                     }
                     .photo-card .desc p {
                         margin: 5px 0;
-                        color: #555;
+                        color: #666;
                     }
                     .photo-card .desc span {
                         font-weight: bold;
@@ -405,19 +406,19 @@ async fn tout_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #f87a36ff;
+                        background-color: #d8d8d0;
                         border: none;
-                        color: white;
+                        color: #222;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
-                        border-radius: 6px;
+                        border-radius: 4px;
                         display: inline-block;
                         transition: background-color 0.3s;
                     }
                     .btn:hover {
-                        background-color: #0056b3;
+                        background-color: #c6c6c0;
                     }
                     .actions {
                         margin: 20px 0;
@@ -541,7 +542,7 @@ async fn portrait_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f7e3cdff;
+                        background-color: #d8d8d0;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -552,23 +553,25 @@ async fn portrait_photos_invite(
                         font-size: 2em;
                     }
                     .gallery {
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: center;
-                        gap: 20px;
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
                         padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
                     }
                     .photo-card {
-                        background: #f87a36ff;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 90%;
-                        max-width: 700px;
+                        width: 100%;
+                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
-                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
                     .photo-card img {
                         width: 100%;
@@ -584,7 +587,7 @@ async fn portrait_photos_invite(
                     }
                     .photo-card .desc p {
                         margin: 5px 0;
-                        color: #555;
+                        color: #666;
                     }
                     .photo-card .desc span {
                         font-weight: bold;
@@ -592,19 +595,19 @@ async fn portrait_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #f87a36ff;
+                        background-color: #d8d8d0;
                         border: none;
-                        color: white;
+                        color: #222;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
-                        border-radius: 6px;
+                        border-radius: 4px;
                         display: inline-block;
                         transition: background-color 0.3s;
                     }
                     .btn:hover {
-                        background-color: #0056b3;
+                        background-color: #c6c6c0;
                     }
                     .actions {
                         margin: 20px 0;
@@ -717,7 +720,7 @@ async fn animaux_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f7e3cdff;
+                        background-color: #d8d8d0;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -728,24 +731,26 @@ async fn animaux_photos_invite(
                         font-size: 2em;
                     }
                     .gallery {
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: center;
-                        gap: 20px;
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
                         padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
                     }
                     .photo-card {
-                        background: #f87a36ff;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 90%;
-                        max-width: 700px;
+                        width: 100%;
+                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer; /* 🔹 clic actif */
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
-                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
                     .photo-card img {
                         width: 100%;
@@ -759,7 +764,7 @@ async fn animaux_photos_invite(
                     }
                     .photo-card .desc p {
                         margin: 5px 0;
-                        color: #555;
+                        color: #666;
                     }
                     .photo-card .desc span {
                         font-weight: bold;
@@ -767,19 +772,19 @@ async fn animaux_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #f87a36ff;
+                        background-color: #d8d8d0;
                         border: none;
-                        color: white;
+                        color: #222;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
-                        border-radius: 6px;
+                        border-radius: 4px;
                         display: inline-block;
                         transition: background-color 0.3s;
                     }
                     .btn:hover {
-                        background-color: #0056b3;
+                        background-color: #c6c6c0;
                     }
                     .actions {
                         margin: 20px 0;
@@ -901,7 +906,7 @@ async fn paysage_photos_invite(
                 <style>
                     body {
                         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #f7e3cdff;
+                        background-color: #d8d8d0;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -912,23 +917,25 @@ async fn paysage_photos_invite(
                         font-size: 2em;
                     }
                     .gallery {
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: center;
-                        gap: 20px;
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
                         padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
                     }
                     .photo-card {
-                        background: #f87a36ff;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 90%; /* 🔹 width responsive */
-                        max-width: 700px; /* 🔹 limite sur desktop */
+                        width: 100%; /* 🔹 width responsive */
+                        max-width: none; /* 🔹 limite sur desktop */
                         transition: transform 0.3s, box-shadow 0.3s;
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
-                        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
                     .photo-card img {
                         width: 100%;
@@ -944,7 +951,7 @@ async fn paysage_photos_invite(
                     }
                     .photo-card .desc p {
                         margin: 5px 0;
-                        color: #555;
+                        color: #666;
                     }
                     .photo-card .desc span {
                         font-weight: bold;
@@ -952,19 +959,19 @@ async fn paysage_photos_invite(
                     }
                     .btn {
                         margin: 5px;
-                        background-color: #f87a36ff;
+                        background-color: #d8d8d3;
                         border: none;
-                        color: white;
+                        color: #222;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
                         cursor: pointer;
                         text-decoration: none;
-                        border-radius: 6px;
+                        border-radius: 4px;
                         display: inline-block;
                         transition: background-color 0.3s;
                     }
                     .btn:hover {
-                        background-color: #0056b3;
+                        background-color: #c6c6c0;
                     }
                     .actions {
                         margin: 20px 0;
@@ -1078,18 +1085,68 @@ async fn get_photos_admin(
 
     let mut html = String::from(r#"
     <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    background-color: #f4f4f2;
+                    color: #222;
+                    margin: 0;
+                    padding: 32px 20px;
+                    text-align: center;
+                }
+                button {
+                    background-color: #d8d8d3;
+                    border: none;
+                    color: #222;
+                    padding: 0.8em 1.2em;
+                    border-radius: 4px;
+                    cursor: pointer;
+                }
+                button:hover {
+                    background-color: #c6c6c0;
+                }
+                .admin-gallery {
+                    display: grid;
+                    grid-template-columns: minmax(0, 1fr);
+                    gap: 22px;
+                    max-width: 780px;
+                    margin: 24px auto;
+                }
+                .admin-card {
+                    background: #dcddd5;
+                    border: 1px solid #d1d1c8;
+                    border-radius: 6px;
+                    padding: 12px;
+                    box-shadow: 0 6px 18px rgba(0,0,0,0.035);
+                    text-align: left;
+                }
+                .admin-card img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    border-radius: 4px;
+                }
+                .admin-card p {
+                    color: #666;
+                    line-height: 1.5;
+                }
+            </style>
+        </head>
         <body>
             <h1>Photos</h1>
             <form action="/homepage_admin">
                 <button>Accueil</button>
             </form>
+            <div class="admin-gallery">
     "#);
 
     for photo in rows {
         html.push_str(&format!(
             r#"
-            <div>
-                <img src="/images/{0}" width="300" /><br/>
+            <div class="admin-card">
+                <img src="/images/{0}" /><br/>
                 <p>{1}</p>
 
                 <form action="/delete" method="post">
@@ -1097,12 +1154,11 @@ async fn get_photos_admin(
                     <button type="submit">Supprimer</button>
                 </form>
             </div>
-            <hr/>
             "#,
             photo.filename, photo.description
         ));
     }
-    html.push_str("</body></html>");
+    html.push_str("</div></body></html>");
 
     Ok(Html(html))
 }
@@ -1178,5 +1234,5 @@ async fn supp_photo(
     if tokio::fs::remove_file(&filepath).await.is_err() {
         return Err("Erreur lors de la suppression du fichier".to_string());
     }
-    Ok(Redirect::to("/homepage_admin"))
+    Ok(Redirect::to("/delete"))
 }  
