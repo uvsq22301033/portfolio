@@ -8,9 +8,11 @@ use sqlx::{prelude::FromRow, SqlitePool};
 use serde::{Serialize, Deserialize};
 use tower_http::services::ServeDir;
 use axum::extract::{Multipart, DefaultBodyLimit};
-use tower_cookies::{CookieManagerLayer,Cookies,Cookie};
+use tower_cookies::{CookieManagerLayer,Cookies,Cookie, Key};
+use tower_cookies::cookie::{SameSite, time::Duration};
 use axum::response::Redirect;
 use sha2::{Sha256, Digest};
+use std::{env, path::Path};
 
 
 
@@ -33,7 +35,90 @@ struct DeletePhoto {
 }
 
 
-const ADMIN_PASSWORD: &str = "sinj";
+const ADMIN_SESSION_COOKIE: &str = "admin_session";
+
+fn env_value(name: &str) -> Option<String> {
+    env::var(name).ok().map(|value| value.trim().to_string()).filter(|value| !value.is_empty())
+}
+
+fn admin_password() -> Option<String> {
+    env_value("ADMIN_PASSWORD")
+}
+
+fn cookie_secure() -> bool {
+    env_value("ADMIN_COOKIE_SECURE").map(|value| value != "false").unwrap_or(true)
+}
+
+fn session_key() -> Option<Key> {
+    let secret = env_value("SESSION_SECRET")?;
+    if secret.len() < 32 {
+        return None;
+    }
+
+    let mut first = Sha256::new();
+    first.update(b"portfolio-admin-session-key-1:");
+    first.update(secret.as_bytes());
+
+    let mut second = Sha256::new();
+    second.update(b"portfolio-admin-session-key-2:");
+    second.update(secret.as_bytes());
+
+    let mut key_material = Vec::with_capacity(64);
+    key_material.extend_from_slice(&first.finalize());
+    key_material.extend_from_slice(&second.finalize());
+    Some(Key::from(&key_material))
+}
+
+fn admin_session_cookie() -> Cookie<'static> {
+    Cookie::build((ADMIN_SESSION_COOKIE, "true"))
+        .path("/")
+        .http_only(true)
+        .same_site(SameSite::Strict)
+        .secure(cookie_secure())
+        .max_age(Duration::hours(8))
+        .build()
+}
+
+fn remove_admin_session_cookie() -> Cookie<'static> {
+    Cookie::build(ADMIN_SESSION_COOKIE).path("/").build()
+}
+
+fn is_admin(cookies: &Cookies) -> bool {
+    session_key()
+        .and_then(|key| cookies.signed(&key).get(ADMIN_SESSION_COOKIE))
+        .map(|cookie| cookie.value() == "true")
+        .unwrap_or(false)
+}
+
+fn html_escape(value: &str) -> String {
+    value
+        .replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+        .replace('"', "&quot;")
+        .replace('\'', "&#39;")
+}
+
+fn safe_filename(filename: &str) -> Option<String> {
+    let filename = filename.trim();
+    let basename = Path::new(filename).file_name()?.to_str()?;
+    if filename != basename || basename.is_empty() || basename == "." || basename == ".." {
+        return None;
+    }
+
+    let has_valid_chars = basename
+        .chars()
+        .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '-' | '_'));
+    if !has_valid_chars {
+        return None;
+    }
+
+    let extension = Path::new(basename).extension()?.to_str()?.to_ascii_lowercase();
+    match extension.as_str() {
+        "jpg" | "jpeg" | "png" | "webp" | "gif" => Some(basename.to_string()),
+        _ => None,
+    }
+}
 
 #[tokio::main]
 async fn main() {
@@ -71,7 +156,9 @@ async fn main() {
 
 
 async fn identification(cookies: Cookies) -> Html<String> {
-    cookies.add(Cookie::new("is_admin", "false"));
+    if let Some(key) = session_key() {
+        cookies.signed(&key).remove(remove_admin_session_cookie());
+    }
     let html = r#"
         <html>
             <head>
@@ -156,8 +243,32 @@ async fn redirect(
     Form(form): Form<PasswordForm>,
 ) -> Html<String> {
 
-    if form.password == ADMIN_PASSWORD {
-        cookies.add(Cookie::new("is_admin", "true"));
+    let Some(password) = admin_password() else {
+        return Html(r#"
+            <html>
+                <body>
+                    <h1>Configuration admin manquante</h1>
+                    <p>Définissez ADMIN_PASSWORD et SESSION_SECRET côté serveur.</p>
+                    <a href="/"><button>Retour</button></a>
+                </body>
+            </html>
+        "#.to_string());
+    };
+
+    let Some(key) = session_key() else {
+        return Html(r#"
+            <html>
+                <body>
+                    <h1>Configuration session manquante</h1>
+                    <p>SESSION_SECRET doit contenir au moins 32 caractères.</p>
+                    <a href="/"><button>Retour</button></a>
+                </body>
+            </html>
+        "#.to_string());
+    };
+
+    if form.password == password {
+        cookies.signed(&key).add(admin_session_cookie());
 
         let html = r#"
              <html>
@@ -270,8 +381,7 @@ async fn homepage_invite() -> Html<String> {
 
 
 async fn homepage_admin(cookies: Cookies) -> Html<String> {
-    let is_admin = cookies.get("is_admin").map(|c| c.value() == "true").unwrap_or(false);
-    if !is_admin {
+    if !is_admin(&cookies) {
         return Html("<h1>Accès refusé</h1><a href='/'><button>Retour</button></a>".to_string());
     }
 
@@ -479,6 +589,9 @@ async fn tout_photos_invite(
     "#);
 
     for photo in rows {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
         html.push_str(&format!(
             r#"
                 <div class='photo-card' onclick="openImage('/images/{0}')">
@@ -489,9 +602,9 @@ async fn tout_photos_invite(
                     </div>
                 </div>
             "#,
-            photo.filename,
-            photo.category,
-            photo.description
+            filename,
+            category,
+            description
         ));
     }
 
@@ -680,6 +793,9 @@ async fn portrait_photos_invite(
     "#);
 
     for photo in rows {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
         html.push_str(&format!(
             r#"
                 <div class='photo-card'>
@@ -690,9 +806,9 @@ async fn portrait_photos_invite(
                     </div>
                 </div>
             "#,
-            photo.filename,
-            photo.category,
-            photo.description
+            filename,
+            category,
+            description
         ));
     }
 
@@ -845,6 +961,9 @@ async fn animaux_photos_invite(
     "#);
 
     for photo in rows {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
         html.push_str(&format!(
             r#"
                 <div class='photo-card' onclick="openImage('/images/{0}')">
@@ -855,9 +974,9 @@ async fn animaux_photos_invite(
                     </div>
                 </div>
             "#,
-            photo.filename,
-            photo.category,
-            photo.description
+            filename,
+            category,
+            description
         ));
     }
 
@@ -1044,6 +1163,9 @@ async fn paysage_photos_invite(
     "#);
 
     for photo in rows {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
         html.push_str(&format!(
             r#"
                 <div class='photo-card'>
@@ -1054,9 +1176,9 @@ async fn paysage_photos_invite(
                     </div>
                 </div>
             "#,
-            photo.filename,
-            photo.category,
-            photo.description
+            filename,
+            category,
+            description
         ));
     }
 
@@ -1071,8 +1193,7 @@ async fn get_photos_admin(
     cookies: Cookies,
     State(db): State<SqlitePool>,
 ) -> Result<Html<String>, axum::http::StatusCode> {
-    let is_admin = cookies.get("is_admin").map(|c| c.value() == "true").unwrap_or(false);
-    if !is_admin {
+    if !is_admin(&cookies) {
         return Err(axum::http::StatusCode::FORBIDDEN);
     }
 
@@ -1143,6 +1264,8 @@ async fn get_photos_admin(
     "#);
 
     for photo in rows {
+        let filename = html_escape(&photo.filename);
+        let description = html_escape(&photo.description);
         html.push_str(&format!(
             r#"
             <div class="admin-card">
@@ -1155,7 +1278,7 @@ async fn get_photos_admin(
                 </form>
             </div>
             "#,
-            photo.filename, photo.description
+            filename, description
         ));
     }
     html.push_str("</div></body></html>");
@@ -1171,8 +1294,7 @@ async fn upload_photo(
     mut multipart: Multipart,
 ) -> Result<Redirect, String> {
 
-    let is_admin = cookies.get("is_admin").map(|c| c.value() == "true").unwrap_or(false);
-    if !is_admin {
+    if !is_admin(&cookies) {
         return Err("Accès refusé".to_string());
     }
 
@@ -1183,7 +1305,8 @@ async fn upload_photo(
     while let Some(field) = multipart.next_field().await.map_err(|e| e.to_string())? {
         match field.name() {
             Some("file") => {
-                filename = field.file_name().unwrap_or("file.jpg").to_string();
+                filename = safe_filename(field.file_name().unwrap_or("file.jpg"))
+                    .ok_or_else(|| "Nom de fichier invalide".to_string())?;
                 let data = field.bytes().await.map_err(|e| e.to_string())?;
                 let filepath = format!("images/{}", filename);
                 tokio::fs::write(&filepath, &data).await.map_err(|e| e.to_string())?;
@@ -1221,18 +1344,19 @@ async fn supp_photo(
     Form(payload): Form<DeletePhoto>,
 ) -> Result<Redirect, String> {
 
-    let is_admin = cookies.get("is_admin").map(|c| c.value() == "true").unwrap_or(false);
-    if !is_admin {
+    if !is_admin(&cookies) {
         return Err("Accès refusé".to_string());
     }
+    let filename = safe_filename(&payload.filename)
+        .ok_or_else(|| "Nom de fichier invalide".to_string())?;
     sqlx::query("DELETE FROM photos WHERE filename = ?")
-        .bind(&payload.filename)
+        .bind(&filename)
         .execute(&db)
         .await
         .map_err(|e| e.to_string())?;
-    let filepath = format!("images/{}", payload.filename);
+    let filepath = format!("images/{}", filename);
     if tokio::fs::remove_file(&filepath).await.is_err() {
         return Err("Erreur lors de la suppression du fichier".to_string());
     }
-    Ok(Redirect::to("/delete"))
+    Ok(Redirect::to("/homepage_admin"))
 }  
