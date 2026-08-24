@@ -131,7 +131,8 @@ async fn main() {
     
 
     let app = Router::new()
-    .route("/", get(identification))
+    .route("/", get(homepage_invite))
+    .route("/identification", get(identification))
     .route("/redirect", post(redirect))
     .route("/homepage_admin", get(homepage_admin))
     .route("/homepage_invite", get(homepage_invite))
@@ -220,7 +221,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                 <h1>IDENTIFICATION</h1>
 
                 <div class="button-container">
-                    <a href="/homepage_invite">
+                    <a href="/">
                         <button>Invité(e)</button>
                     </a>
                 </div>
@@ -249,7 +250,7 @@ async fn redirect(
                 <body>
                     <h1>Configuration admin manquante</h1>
                     <p>Définissez ADMIN_PASSWORD et SESSION_SECRET côté serveur.</p>
-                    <a href="/"><button>Retour</button></a>
+                    <a href="/identification"><button>Retour</button></a>
                 </body>
             </html>
         "#.to_string());
@@ -261,7 +262,7 @@ async fn redirect(
                 <body>
                     <h1>Configuration session manquante</h1>
                     <p>SESSION_SECRET doit contenir au moins 32 caractères.</p>
-                    <a href="/"><button>Retour</button></a>
+                    <a href="/identification"><button>Retour</button></a>
                 </body>
             </html>
         "#.to_string());
@@ -288,7 +289,7 @@ async fn redirect(
             <html>
                 <body>
                     <h1>Mot de passe incorrect</h1>
-                    <a href="/"><button>Retour</button></a>
+                    <a href="/identification"><button>Retour</button></a>
                 </body>
             </html>
         "#.to_string())
@@ -370,7 +371,7 @@ async fn homepage_invite() -> Html<String> {
                  
                 <div class="button-container">
                     <a href="/photo_invite"><button>Voir les photos</button></a>
-                    <a href="/"><button>Identification</button></a>
+                    <a href="/identification"><button>Identification</button></a>
                 </div>
             </body>
         </html>
@@ -382,7 +383,7 @@ async fn homepage_invite() -> Html<String> {
 
 async fn homepage_admin(cookies: Cookies) -> Html<String> {
     if !is_admin(&cookies) {
-        return Html("<h1>Accès refusé</h1><a href='/'><button>Retour</button></a>".to_string());
+        return Html("<h1>Accès refusé</h1><a href='/identification'><button>Retour</button></a>".to_string());
     }
 
     Html(r#"
@@ -439,7 +440,7 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
                 </form>
 
                 <a href="/photo_admin"><button>Voir les photos</button></a>
-                <a href="/"><button>Déconnexion</button></a>
+                <a href="/identification"><button>Déconnexion</button></a>
             </body>
         </html>
     "#.to_string())
@@ -577,7 +578,7 @@ async fn tout_photos_invite(
                 <h1>Galerie</h1>
 
                 <div class='actions'>
-                    <a class='btn' href='/homepage_invite'>Accueil</a>
+                    <a class='btn' href='/'>Accueil</a>
                     <div class='filters'>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
@@ -781,7 +782,7 @@ async fn portrait_photos_invite(
                 <h1>Galerie - Portrait</h1>
 
                 <div class='actions'>
-                    <a class='btn' href='/homepage_invite'>Accueil</a>
+                    <a class='btn' href='/'>Accueil</a>
                     <div class='filters'>
                         <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
@@ -949,7 +950,7 @@ async fn animaux_photos_invite(
                 <h1>Galerie - Animaux</h1>
 
                 <div class='actions'>
-                    <a class='btn' href='/homepage_invite'>Accueil</a>
+                    <a class='btn' href='/'>Accueil</a>
                     <div class='filters'>
                         <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
@@ -1151,7 +1152,7 @@ async fn paysage_photos_invite(
                 <h1>Galerie - Paysage</h1>
 
                 <div class='actions'>
-                    <a class='btn' href='/homepage_invite'>Accueil</a>
+                    <a class='btn' href='/'>Accueil</a>
                     <div class='filters'>
                         <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
