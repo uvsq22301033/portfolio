@@ -360,13 +360,12 @@ async fn homepage_invite() -> Html<String> {
             </head>
             <body>
                 <h1>Bienvenue sur mon portfolio !</h1>
-                <p>Bienvenue voyageur !</p>
                 <p>
                     Ayant fait l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
                     Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
                 <p style="color: #666;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
-                <p style="color: #666;">Bienvenue et bonne visite !</p>
+                <p style="color: #666;">bonne visite !</p>
                 <img src="/images/banniere.jpg" alt="bannière"/>
                  
                 <div class="button-container">
