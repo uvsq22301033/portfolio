@@ -129,7 +129,7 @@ async fn main() {
 
     let images_service = ServeDir::new("images");
     
-
+    //route
     let app = Router::new()
     .route("/", get(homepage_invite))
     .route("/identification", get(identification))
