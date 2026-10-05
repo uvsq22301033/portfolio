@@ -137,6 +137,8 @@ async fn main() {
     .route("/homepage_admin", get(homepage_admin))
     .route("/homepage_invite", get(homepage_invite))
     .route("/photo_invite", get(tout_photos_invite))
+    .route("/photo_invite/autre", get(autre_photos_invite))
+    .route("/photo_invite/sport", get(sport_photos_invite))
     .route("/photo_invite/portrait", get(portrait_photos_invite))
     .route("/photo_invite/animaux", get(animaux_photos_invite))
     .route("/photo_invite/paysage", get(paysage_photos_invite))
@@ -301,6 +303,7 @@ async fn homepage_invite() -> Html<String> {
     let html = r#"
         <html>
             <head>
+                <title>Portfolio de Badis Khouildi Gomez</title>
                 <!-- 🔹 CHANGEMENT : style global et responsive -->
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
@@ -433,6 +436,7 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
                         <option value="paysage">Paysage</option>
                         <option value="portrait">Portrait</option>
                         <option value="animaux">Animaux</option>
+                        <option value="sport">Sport</option>
                         <option value="autre">Autre</option>
                     </select><br>
                     <button type="submit">Uploader une image</button>
@@ -582,6 +586,8 @@ async fn tout_photos_invite(
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
                         <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                        <a class='btn' href='/photo_invite/sport'>Sport</a>
+                        <a class='btn' href='/photo_invite/autre'>Autre</a>
                     </div>
                 </div>
 
@@ -635,6 +641,189 @@ async fn tout_photos_invite(
 
 
 
+
+
+async fn autre_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT filename, description, category FROM photos WHERE category = 'autre'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <style>
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #d8d8d0;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2em;
+                    }
+                    .gallery {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
+                        padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
+                    }
+                    .photo-card {
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
+                        overflow: hidden;
+                        width: 100%;
+                        max-width: none;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                        cursor: pointer;
+                        transition: transform 0.3s ease;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #666;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .btn {
+                        margin: 5px;
+                        background-color: #d8d8d0;
+                        border: none;
+                        color: #222;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        display: inline-block;
+                        transition: background-color 0.3s;
+                    }
+                    .btn:hover {
+                        background-color: #c6c6c0;
+                    }
+                    .actions {
+                        margin: 20px 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                    }
+                    .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+                    @media (max-width: 600px) {
+                        .btn {
+                            width: 80%;
+                        }
+                        .photo-card {
+                            width: 95%;
+                        }
+                    }
+                </style>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const images = document.querySelectorAll(".photo-card img");
+                        images.forEach(img => {
+                            img.addEventListener("click", () => {
+                                const overlay = document.createElement("div");
+                                overlay.style.position = "fixed";
+                                overlay.style.top = 0;
+                                overlay.style.left = 0;
+                                overlay.style.width = "100%";
+                                overlay.style.height = "100%";
+                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
+                                overlay.style.display = "flex";
+                                overlay.style.alignItems = "center";
+                                overlay.style.justifyContent = "center";
+                                overlay.style.zIndex = "1000";
+
+                                const bigImg = document.createElement("img");
+                                bigImg.src = img.src;
+                                bigImg.style.maxWidth = "95%";
+                                bigImg.style.maxHeight = "95%";
+                                bigImg.style.borderRadius = "10px";
+                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
+                                overlay.appendChild(bigImg);
+
+                                overlay.addEventListener("click", () => overlay.remove());
+                                document.body.appendChild(overlay);
+                            });
+                        });
+                    });
+                </script>
+            </head>
+            <body>
+                <h1>Galerie - Portrait</h1>
+
+                <div class='actions'>
+                    <a class='btn' href='/'>Accueil</a>
+                    <div class='filters'>
+                        <a class='btn' href='/photo_invite'>Tout</a>
+                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                        <a class='btn' href='/photo_invite/sport'>Sport</a>
+                    </div>
+                </div>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card'>
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            filename,
+            category,
+            description
+        ));
+    }
+
+    html.push_str("</div></body></html>");
+
+    Ok(Html(html))
+}
 
 
 async fn portrait_photos_invite(
@@ -786,6 +975,191 @@ async fn portrait_photos_invite(
                         <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                        <a class='btn' href='/photo_invite/sport'>Sport</a>
+                        <a class='btn' href='/photo_invite/autre'>Autre</a>
+                    </div>
+                </div>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card'>
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            filename,
+            category,
+            description
+        ));
+    }
+
+    html.push_str("</div></body></html>");
+
+    Ok(Html(html))
+}
+
+
+async fn sport_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT filename, description, category FROM photos WHERE category = 'sport'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <style>
+                    body {
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        background-color: #d8d8d0;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2em;
+                    }
+                    .gallery {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
+                        padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
+                    }
+                    .photo-card {
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
+                        overflow: hidden;
+                        width: 100%;
+                        max-width: none;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                        cursor: pointer;
+                        transition: transform 0.3s ease;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #666;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+                    .btn {
+                        margin: 5px;
+                        background-color: #d8d8d0;
+                        border: none;
+                        color: #222;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        display: inline-block;
+                        transition: background-color 0.3s;
+                    }
+                    .btn:hover {
+                        background-color: #c6c6c0;
+                    }
+                    .actions {
+                        margin: 20px 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                    }
+                    .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+                    @media (max-width: 600px) {
+                        .btn {
+                            width: 80%;
+                        }
+                        .photo-card {
+                            width: 95%;
+                        }
+                    }
+                </style>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const images = document.querySelectorAll(".photo-card img");
+                        images.forEach(img => {
+                            img.addEventListener("click", () => {
+                                const overlay = document.createElement("div");
+                                overlay.style.position = "fixed";
+                                overlay.style.top = 0;
+                                overlay.style.left = 0;
+                                overlay.style.width = "100%";
+                                overlay.style.height = "100%";
+                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
+                                overlay.style.display = "flex";
+                                overlay.style.alignItems = "center";
+                                overlay.style.justifyContent = "center";
+                                overlay.style.zIndex = "1000";
+
+                                const bigImg = document.createElement("img");
+                                bigImg.src = img.src;
+                                bigImg.style.maxWidth = "95%";
+                                bigImg.style.maxHeight = "95%";
+                                bigImg.style.borderRadius = "10px";
+                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
+                                overlay.appendChild(bigImg);
+
+                                overlay.addEventListener("click", () => overlay.remove());
+                                document.body.appendChild(overlay);
+                            });
+                        });
+                    });
+                </script>
+            </head>
+            <body>
+                <h1>Galerie - Sport</h1>
+
+                <div class='actions'>
+                    <a class='btn' href='/'>Accueil</a>
+                    <div class='filters'>
+                        <a class='btn' href='/photo_invite'>Tout</a>
+                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                        <a class='btn' href='/photo_invite/autre'>Autre</a>
                     </div>
                 </div>
 
@@ -954,6 +1328,8 @@ async fn animaux_photos_invite(
                         <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
                         <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                        <a class='btn' href='/photo_invite/sport'>Sport</a>
+                        <a class='btn' href='/photo_invite/autre'>Autre</a>
                     </div>
                 </div>
 
@@ -1156,6 +1532,7 @@ async fn paysage_photos_invite(
                         <a class='btn' href='/photo_invite'>Tout</a>
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                        <a class='btn' href='/photo_invite/sport'>Sport</a>
                     </div>
                 </div>
 
