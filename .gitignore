@@ -9,11 +9,5 @@
 .env.*
 !.env.example
 
-# Base de données locale
-portfolio.db
-*.sqlite
-*.sqlite3
-*.db
-
 # Fichiers de déploiement locaux optionnels
 Dockerfile
