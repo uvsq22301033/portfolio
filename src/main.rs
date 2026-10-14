@@ -579,11 +579,6 @@ async fn tout_photos_invite(
                     }
                 </style>
             </head>
-            <footer>
-                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-            </footer>
             <body>
                 <h1>Galerie</h1>
 
@@ -637,6 +632,11 @@ async fn tout_photos_invite(
                         document.getElementById('overlay').style.display = 'none';
                     }
                 </script>
+            <footer>
+                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+            </footer>
             </body>
         </html>
     "#);
@@ -790,11 +790,6 @@ async fn autre_photos_invite(
                     });
                 </script>
             </head>
-            <footer>
-                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-            </footer>
             <body>
                 <h1>Galerie - Portrait</h1>
 
@@ -808,6 +803,11 @@ async fn autre_photos_invite(
                         <a class='btn' href='/photo_invite/sport'>Sport</a>
                     </div>
                 </div>
+                <footer>
+                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+                </footer>
 
                 <div class='gallery'>
     "#);
