@@ -579,6 +579,11 @@ async fn tout_photos_invite(
                     }
                 </style>
             </head>
+            <footer>
+                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+            </footer>
             <body>
                 <h1>Galerie</h1>
 
@@ -785,6 +790,11 @@ async fn autre_photos_invite(
                     });
                 </script>
             </head>
+            <footer>
+                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+            </footer>
             <body>
                 <h1>Galerie - Portrait</h1>
 
@@ -968,6 +978,11 @@ async fn portrait_photos_invite(
                     });
                 </script>
             </head>
+            <footer>
+                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+            </footer>
             <body>
                 <h1>Galerie - Portrait</h1>
 
@@ -1151,6 +1166,11 @@ async fn sport_photos_invite(
                     });
                 </script>
             </head>
+            <footer>
+                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+            </footer>
             <body>
                 <h1>Galerie - Sport</h1>
 
@@ -1321,6 +1341,11 @@ async fn animaux_photos_invite(
                     }
                 </style>
             </head>
+            <footer>
+                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+            </footer>
             <body>
                 <h1>Galerie - Animaux</h1>
 
@@ -1361,7 +1386,6 @@ async fn animaux_photos_invite(
     html.push_str(r#"
                 </div>
 
-                <!-- 🔹 Fenêtre d’image agrandie -->
                 <div class="overlay" id="overlay" onclick="closeImage()">
                     <img id="overlay-img" src="" alt=""/>
                 </div>
@@ -1525,6 +1549,11 @@ async fn paysage_photos_invite(
                     });
                 </script>
             </head>
+            <footer>
+                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+            </footer>
             <body>
                 <h1>Galerie - Paysage</h1>
 
@@ -1535,6 +1564,7 @@ async fn paysage_photos_invite(
                         <a class='btn' href='/photo_invite/animaux'>Animaux</a>
                         <a class='btn' href='/photo_invite/portrait'>Portrait</a>
                         <a class='btn' href='/photo_invite/sport'>Sport</a>
+                        <a class='btn' href='/photo_invite/autre'>Autre</a>
                     </div>
                 </div>
 
