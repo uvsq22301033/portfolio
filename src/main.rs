@@ -365,7 +365,7 @@ async fn homepage_invite() -> Html<String> {
                     Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
                 <p style="color: #666;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
-                <p style="color: #666;">bonne visite !</p>
+                <p style="color: #666;">Bonne visite !</p>
                 <img src="/images/banniere.jpg" alt="bannière"/>
                  
                 <div class="button-container">
