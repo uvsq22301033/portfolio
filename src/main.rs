@@ -26,7 +26,7 @@ struct PasswordForm {
 struct Photo {
     filename: String,
     description: String,
-    category: String, // 🔹 nouvelle colonne
+    category: String,
 }
 
 #[derive(Deserialize)]
@@ -164,7 +164,6 @@ async fn identification(cookies: Cookies) -> Html<String> {
     let html = r#"
         <html>
             <head>
-                <!-- 🔹 CHANGEMENT : style global et responsive -->
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
@@ -202,7 +201,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                         max-width: 250px;
                     }
                     form {
-                        display: inline-block; /* 🔹 centre le formulaire */
+                        display: inline-block; 
                         margin-top: 20px;
                     }
                     .button-container {
@@ -210,10 +209,10 @@ async fn identification(cookies: Cookies) -> Html<String> {
                     }
                     @media (max-width: 500px) {
                         button {
-                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                            width: 80%;
                         }
                         input[type="password"] {
-                            width: 80%; /* 🔹 input adaptatif */
+                            width: 80%; 
                         }
                     }
                 </style>
@@ -303,7 +302,6 @@ async fn homepage_invite() -> Html<String> {
         <html>
             <head>
                 <title>Portfolio de Badis Khouildi Gomez</title>
-                <!-- 🔹 CHANGEMENT : style global et responsive -->
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body { 
@@ -325,7 +323,7 @@ async fn homepage_invite() -> Html<String> {
                         line-height: 1.5;
                     }
                     img {
-                        width: 80%; /* 🔹 image responsive */
+                        width: 80%;
                         max-width: 600px;
                         margin: 15px 0;
                         box-shadow: 0 8px 24px rgba(0,0,0,0.08);
@@ -335,7 +333,7 @@ async fn homepage_invite() -> Html<String> {
                         display: flex;
                         justify-content: center;
                         gap: 10px;
-                        flex-wrap: wrap; /* 🔹 pour que les boutons passent à la ligne sur mobile */
+                        flex-wrap: wrap;
                     }
                     button {
                         background-color: #d8d8d0;
@@ -352,10 +350,10 @@ async fn homepage_invite() -> Html<String> {
                     }
                     @media (max-width: 500px) {
                         button {
-                            width: 80%; /* 🔹 boutons adaptatifs sur mobile */
+                            width: 80%;
                         }
                         img {
-                            width: 95%; /* 🔹 image presque pleine largeur sur mobile */
+                            width: 95%;
                         }
                     }
                 </style>
@@ -363,7 +361,7 @@ async fn homepage_invite() -> Html<String> {
             <body>
                 <h1>Bienvenue sur mon portfolio !</h1>
                 <p>
-                    Ayant fait l'acquisition de l'appareil photo que voici, je vous invite à découvrir mes magnifiques créations.
+                    Je vous invite à découvrir mes magnifiques créations.
                     Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                 </p>
                 <p style="color: #666;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
@@ -374,6 +372,11 @@ async fn homepage_invite() -> Html<String> {
                     <a href="/photo_invite"><button>Voir les photos</button></a>
                     <a href="/identification"><button>Identification</button></a>
                 </div>
+                <footer>
+                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+                </footer>
             </body>
         </html>
     "#;
