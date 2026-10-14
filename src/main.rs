@@ -429,8 +429,6 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
             </head>
             <body>
                 <h1>Bienvenue Admin !</h1>
-                
-                <!-- 🔹 CHANGEMENT : formulaire complet avec description et catégorie -->
                 <form action="/upload" method="post" enctype="multipart/form-data">
                     <input type="file" name="file" accept="image/*" required/><br>
                     <textarea name="description" placeholder="Description" rows="3"></textarea><br>
@@ -558,7 +556,6 @@ async fn tout_photos_invite(
                         }
                     }
 
-                    /* 🔹 Agrandissement */
                     .overlay {
                         display: none;
                         position: fixed;
@@ -632,11 +629,6 @@ async fn tout_photos_invite(
                         document.getElementById('overlay').style.display = 'none';
                     }
                 </script>
-            <footer>
-                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-            </footer>
             </body>
         </html>
     "#);
@@ -803,12 +795,6 @@ async fn autre_photos_invite(
                         <a class='btn' href='/photo_invite/sport'>Sport</a>
                     </div>
                 </div>
-                <footer>
-                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-                </footer>
-
                 <div class='gallery'>
     "#);
 
@@ -978,11 +964,7 @@ async fn portrait_photos_invite(
                     });
                 </script>
             </head>
-            <footer>
-                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-            </footer>
+
             <body>
                 <h1>Galerie - Portrait</h1>
 
@@ -1166,11 +1148,6 @@ async fn sport_photos_invite(
                     });
                 </script>
             </head>
-            <footer>
-                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-            </footer>
             <body>
                 <h1>Galerie - Sport</h1>
 
@@ -1341,11 +1318,6 @@ async fn animaux_photos_invite(
                     }
                 </style>
             </head>
-            <footer>
-                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-            </footer>
             <body>
                 <h1>Galerie - Animaux</h1>
 
@@ -1549,11 +1521,6 @@ async fn paysage_photos_invite(
                     });
                 </script>
             </head>
-            <footer>
-                <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
-                <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-            </footer>
             <body>
                 <h1>Galerie - Paysage</h1>
 
