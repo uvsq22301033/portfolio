@@ -629,9 +629,73 @@ async fn tout_photos_invite(
                         document.getElementById('overlay').style.display = 'none';
                     }
                 </script>
+
+                <footer>
+                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+                </footer>
             </body>
         </html>
     "#);
+
+    html.push_str(r#"
+        </div>
+
+    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+        <img src="/images/arrow.png" alt="Haut" />
+    </button>
+
+    <style>
+        #backToTop {
+            display: none;            
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            border: none;
+            background: transparent;
+            width: 50px;
+            height: 50px;
+            padding: 0; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #backToTop img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <script>
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (btn) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+        </body>
+        </html>
+        "#);
 
     Ok(Html(html))
 }
@@ -783,7 +847,7 @@ async fn autre_photos_invite(
                 </script>
             </head>
             <body>
-                <h1>Galerie - Portrait</h1>
+                <h1>Galerie - Autres</h1>
 
                 <div class='actions'>
                     <a class='btn' href='/'>Accueil</a>
@@ -815,11 +879,81 @@ async fn autre_photos_invite(
             filename,
             category,
             description
-        ));
+        )
+    )
+
     }
+    html.push_str(r#"
+        </div>
+
+        <footer>
+            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+        </footer>
+    </body>
+    </html>
+    "#);
+
+    html.push_str(r#"
+        </div>
+
+    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+        <img src="/images/arrow.png" alt="Haut" />
+    </button>
+
+    <style>
+        #backToTop {
+            display: none;            
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            border: none;
+            background: transparent;
+            width: 50px;
+            height: 50px;
+            padding: 0; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #backToTop img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <script>
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (btn) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+        </body>
+        </html>
+        "#);
 
     html.push_str("</div></body></html>");
-
     Ok(Html(html))
 }
 
@@ -1001,6 +1135,76 @@ async fn portrait_photos_invite(
             description
         ));
     }
+
+    html.push_str(r#"
+        </div>
+
+        <footer>
+            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+        </footer>
+    </body>
+    </html>
+    "#);
+
+    html.push_str(r#"
+        </div>
+
+    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+        <img src="/images/arrow.png" alt="Haut" />
+    </button>
+
+    <style>
+        #backToTop {
+            display: none;            
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            border: none;
+            background: transparent;
+            width: 50px;
+            height: 50px;
+            padding: 0; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #backToTop img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <script>
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (btn) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+        </body>
+        </html>
+        "#);
 
     html.push_str("</div></body></html>");
 
@@ -1185,7 +1389,77 @@ async fn sport_photos_invite(
         ));
     }
 
+    html.push_str(r#"
+        </div>
+
+        <footer>
+            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+        </footer>
+    </body>
+    </html>
+    "#);
+
     html.push_str("</div></body></html>");
+
+    html.push_str(r#"
+        </div>
+
+    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+        <img src="/images/arrow.png" alt="Haut" />
+    </button>
+
+    <style>
+        #backToTop {
+            display: none;            
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            border: none;
+            background: transparent;
+            width: 50px;
+            height: 50px;
+            padding: 0; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #backToTop img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <script>
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (btn) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+        </body>
+        </html>
+        "#);
 
     Ok(Html(html))
 }
@@ -1354,6 +1628,17 @@ async fn animaux_photos_invite(
             description
         ));
     }
+    html.push_str(r#"
+        </div>
+
+        <footer>
+            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+        </footer>
+    </body>
+    </html>
+    "#);
 
     html.push_str(r#"
                 </div>
@@ -1376,6 +1661,64 @@ async fn animaux_photos_invite(
             </body>
         </html>
     "#);
+
+    html.push_str(r#"
+        </div>
+
+    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+        <img src="/images/arrow.png" alt="Haut" />
+    </button>
+
+    <style>
+        #backToTop {
+            display: none;            
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            border: none;
+            background: transparent;
+            width: 50px;
+            height: 50px;
+            padding: 0; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #backToTop img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <script>
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (btn) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+        </body>
+        </html>
+        "#);
 
     Ok(Html(html))
 }
@@ -1558,7 +1901,77 @@ async fn paysage_photos_invite(
         ));
     }
 
+    html.push_str(r#"
+        </div>
+
+        <footer>
+            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+        </footer>
+    </body>
+    </html>
+    "#);
+
     html.push_str("</div></body></html>");
+
+    html.push_str(r#"
+        </div>
+
+    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+        <img src="/images/arrow.png" alt="Haut" />
+    </button>
+
+    <style>
+        #backToTop {
+            display: none;            
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            border: none;
+            background: transparent;
+            width: 50px;
+            height: 50px;
+            padding: 0; 
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #backToTop img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        #backToTop:hover {
+            transform: scale(1.1);
+        }
+    </style>
+
+    <script>
+        window.onscroll = function() {
+            const btn = document.getElementById("backToTop");
+            if (btn) {
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    btn.style.display = "block";
+                } else {
+                    btn.style.display = "none";
+                }
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+        </body>
+        </html>
+        "#);
 
     Ok(Html(html))
 }
