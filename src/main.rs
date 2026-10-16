@@ -165,6 +165,9 @@ async fn identification(cookies: Cookies) -> Html<String> {
         <html>
             <head>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
                 <style>
                     body {
                         font-family: Arial, sans-serif;
@@ -176,6 +179,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                     h1 {
                         color: #333;
                         margin-bottom: 30px;
+                        font-family: 'Orbitron', sans-serif;
                     }
                     button {
                         background-color: #d8d8d3;
@@ -303,6 +307,9 @@ async fn homepage_invite() -> Html<String> {
             <head>
                 <title>Portfolio de Badis Khouildi Gomez</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
                 <style>
                     body { 
                         font-family: Arial, sans-serif; 
@@ -312,11 +319,26 @@ async fn homepage_invite() -> Html<String> {
                         padding: 0;
                     }
                     h1 { 
-                        color: #000000ff; 
+                        color: rgb(255, 0, 0); 
                         margin-bottom: 20px;
+                        font-family: 'Orbitron', sans-serif;
+                    }
+                    footer p{
+                        font-size: 1em;
+                        color: #666;
+                        margin: 10px auto;
+                        max-width: 600px;
+                        line-height: 1.5;
+                        font-family: Arial, sans-serif;
+                    }
+                    footer a {
+                        color: #1121d1;
+                        text-decoration: underline;
+                        font-family: Arial, sans-serif;
                     }
                     p {
                         font-size: 1em;
+                        font-family: 'Orbitron', sans-serif;
                         color: #000000ff;
                         margin: 10px auto;
                         max-width: 600px;
@@ -373,7 +395,7 @@ async fn homepage_invite() -> Html<String> {
                     <a href="/identification"><button>Identification</button></a>
                 </div>
                 <footer>
-                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                    <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
                     <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
                     <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
                 </footer>
@@ -464,10 +486,9 @@ async fn tout_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        font-family: 'Orbitron', sans-serif;
                         background-color: #d8d8d0;
                         text-align: center;
                         margin: 0;
@@ -631,7 +652,7 @@ async fn tout_photos_invite(
                 </script>
 
                 <footer>
-                    <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+                    <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
                     <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
                     <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
                 </footer>
@@ -723,7 +744,7 @@ async fn autre_photos_invite(
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        font-family: 'Orbitron', sans-serif;
                         background-color: #d8d8d0;
                         text-align: center;
                         margin: 0;
@@ -887,7 +908,7 @@ async fn autre_photos_invite(
         </div>
 
         <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
             <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
             <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
         </footer>
@@ -1140,7 +1161,7 @@ async fn portrait_photos_invite(
         </div>
 
         <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
             <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
             <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
         </footer>
@@ -1393,7 +1414,7 @@ async fn sport_photos_invite(
         </div>
 
         <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
             <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
             <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
         </footer>
@@ -1632,7 +1653,7 @@ async fn animaux_photos_invite(
         </div>
 
         <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
             <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
             <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
         </footer>
@@ -1905,7 +1926,7 @@ async fn paysage_photos_invite(
         </div>
 
         <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2024 Badis Khouildi Gomez</p>
+            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
             <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
             <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
         </footer>
