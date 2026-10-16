@@ -345,8 +345,8 @@ async fn homepage_invite() -> Html<String> {
                         line-height: 1.5;
                     }
                     img {
-                        width: 80%;
-                        max-width: 600px;
+                        width: 90%;
+                        max-width: 700px;
                         margin: 15px 0;
                         box-shadow: 0 8px 24px rgba(0,0,0,0.08);
                     }
@@ -375,7 +375,8 @@ async fn homepage_invite() -> Html<String> {
                             width: 80%;
                         }
                         img {
-                            width: 95%;
+                            width: 90%;
+                            max-width: 700px;
                         }
                     }
                 </style>
@@ -388,7 +389,7 @@ async fn homepage_invite() -> Html<String> {
                 </p>
                 <p style="color: #666;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
                 <p style="color: #666;">Bonne visite !</p>
-                <img src="/images/banniere.jpg" alt="bannière"/>
+                <img src="/images/banniere_2.jpg" alt="bannière"/>
                  
                 <div class="button-container">
                     <a href="/photo_invite"><button>Voir les photos</button></a>
