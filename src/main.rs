@@ -615,7 +615,7 @@ async fn tout_photos_invite(
                 <div class='gallery'>
     "#);
 
-    for photo in rows {
+    for photo in rows.into_iter().rev() {
         let filename = html_escape(&photo.filename);
         let category = html_escape(&photo.category);
         let description = html_escape(&photo.description);
@@ -884,7 +884,7 @@ async fn autre_photos_invite(
                 <div class='gallery'>
     "#);
 
-    for photo in rows {
+    for photo in rows.into_iter().rev() {
         let filename = html_escape(&photo.filename);
         let category = html_escape(&photo.category);
         let description = html_escape(&photo.description);
@@ -1138,7 +1138,7 @@ async fn portrait_photos_invite(
                 <div class='gallery'>
     "#);
 
-    for photo in rows {
+    for photo in rows.into_iter().rev() {
         let filename = html_escape(&photo.filename);
         let category = html_escape(&photo.category);
         let description = html_escape(&photo.description);
@@ -1391,7 +1391,7 @@ async fn sport_photos_invite(
                 <div class='gallery'>
     "#);
 
-    for photo in rows {
+    for photo in rows.into_iter().rev() {
         let filename = html_escape(&photo.filename);
         let category = html_escape(&photo.category);
         let description = html_escape(&photo.description);
@@ -1631,7 +1631,7 @@ async fn animaux_photos_invite(
                 <div class='gallery'>
     "#);
 
-    for photo in rows {
+    for photo in rows.into_iter().rev() {
         let filename = html_escape(&photo.filename);
         let category = html_escape(&photo.category);
         let description = html_escape(&photo.description);
@@ -1903,7 +1903,7 @@ async fn paysage_photos_invite(
                 <div class='gallery'>
     "#);
 
-    for photo in rows {
+    for photo in rows.into_iter().rev() {
         let filename = html_escape(&photo.filename);
         let category = html_escape(&photo.category);
         let description = html_escape(&photo.description);
