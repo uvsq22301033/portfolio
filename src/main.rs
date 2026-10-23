@@ -578,14 +578,18 @@ async fn tout_photos_invite(
                     }
 
                     .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
+                        columns: 2;
+                        column-gap: 22px;
                         padding: 20px;
-                        max-width: 780px;
+                        max-width: 1100px;
                         margin: 0 auto;
                     }
                     .photo-card {
+                        display: inline-block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        break-inside: avoid;
+                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
@@ -669,7 +673,8 @@ async fn tout_photos_invite(
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                </style>
+                                    @media (max-width: 600px) { .gallery { columns: 1; } }
+</style>
             </head>
             <body>
 
@@ -844,14 +849,18 @@ async fn autre_photos_invite(
                     }
 
                     .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
+                        columns: 2;
+                        column-gap: 22px;
                         padding: 20px;
-                        max-width: 780px;
+                        max-width: 1100px;
                         margin: 0 auto;
                     }
                     .photo-card {
+                        display: inline-block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        break-inside: avoid;
+                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
@@ -935,7 +944,8 @@ async fn autre_photos_invite(
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                </style>
+                                    @media (max-width: 600px) { .gallery { columns: 1; } }
+</style>
             </head>
             <body>
 
@@ -1105,14 +1115,18 @@ async fn portrait_photos_invite(
                     }
 
                     .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
+                        columns: 2;
+                        column-gap: 22px;
                         padding: 20px;
-                        max-width: 780px;
+                        max-width: 1100px;
                         margin: 0 auto;
                     }
                     .photo-card {
+                        display: inline-block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        break-inside: avoid;
+                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
@@ -1196,7 +1210,8 @@ async fn portrait_photos_invite(
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                </style>
+                                    @media (max-width: 600px) { .gallery { columns: 1; } }
+</style>
             </head>
             <body>
 
@@ -1366,14 +1381,18 @@ async fn sport_photos_invite(
                     }
 
                     .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
+                        columns: 2;
+                        column-gap: 22px;
                         padding: 20px;
-                        max-width: 780px;
+                        max-width: 1100px;
                         margin: 0 auto;
                     }
                     .photo-card {
+                        display: inline-block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        break-inside: avoid;
+                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
@@ -1457,7 +1476,8 @@ async fn sport_photos_invite(
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                </style>
+                                    @media (max-width: 600px) { .gallery { columns: 1; } }
+</style>
             </head>
             <body>
 
@@ -1627,14 +1647,18 @@ async fn animaux_photos_invite(
                     }
 
                     .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
+                        columns: 2;
+                        column-gap: 22px;
                         padding: 20px;
-                        max-width: 780px;
+                        max-width: 1100px;
                         margin: 0 auto;
                     }
                     .photo-card {
+                        display: inline-block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        break-inside: avoid;
+                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
@@ -1718,7 +1742,8 @@ async fn animaux_photos_invite(
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                </style>
+                                    @media (max-width: 600px) { .gallery { columns: 1; } }
+</style>
             </head>
             <body>
 
@@ -1888,14 +1913,18 @@ async fn paysage_photos_invite(
                     }
 
                     .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
+                        columns: 2;
+                        column-gap: 22px;
                         padding: 20px;
-                        max-width: 780px;
+                        max-width: 1100px;
                         margin: 0 auto;
                     }
                     .photo-card {
+                        display: inline-block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        break-inside: avoid;
+                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
@@ -1979,7 +2008,8 @@ async fn paysage_photos_invite(
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                </style>
+                                    @media (max-width: 600px) { .gallery { columns: 1; } }
+</style>
             </head>
             <body>
 
