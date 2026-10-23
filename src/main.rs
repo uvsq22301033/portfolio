@@ -416,6 +416,7 @@ async fn homepage_invite() -> Html<String> {
                         Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
                     </p>
                     <p class="subtext">Pour profiter pleinement, montez la luminosité de votre écran.</p>
+                    <p class="subtext">Vous pouvez clicker/appuyer sur les photos pour les agrandir.</p>
                     <p class="subtext">Bonne visite !</p>
                 </header>
 
