@@ -313,43 +313,51 @@ async fn homepage_invite() -> Html<String> {
                 <style>
                     body { 
                         font-family: Arial, sans-serif; 
-                        background-color: #d8d8d0; 
+                        background-color: #ebdecb; 
                         text-align: center; 
-                        margin: 20px;
+                        margin: 0;
                         padding: 0;
                     }
-                    h1 { 
-                        color: rgb(255, 0, 0); 
-                        margin-bottom: 20px;
+                    
+                    header.top-banner {
+                        width: 100%;
+                        background-color: #534135;
+                        padding: 30px 20px;
+                        box-sizing: border-box;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                    
+                    header.top-banner h1 { 
+                        color: #ffffff;
+                        margin: 0 0 15px 0;
                         font-family: 'Orbitron', sans-serif;
+                        font-size: 2.2em;
                     }
-                    footer p{
-                        font-size: 1em;
-                        color: #666;
-                        margin: 10px auto;
-                        max-width: 600px;
-                        line-height: 1.5;
-                        font-family: Arial, sans-serif;
-                    }
-                    footer a {
-                        color: #1121d1;
-                        text-decoration: underline;
-                        font-family: Arial, sans-serif;
-                    }
-                    p {
+
+                    header.top-banner p {
                         font-size: 1em;
                         font-family: 'Orbitron', sans-serif;
-                        color: #000000ff;
-                        margin: 10px auto;
-                        max-width: 600px;
+                        color: #f0e6df;
+                        margin: 8px auto;
+                        max-width: 650px;
                         line-height: 1.5;
                     }
+
+                    header.top-banner p.subtext {
+                        color: #d1c2b5; /* Textes secondaires un peu plus discrets */
+                        font-size: 0.9em;
+                    }
+
                     img {
                         width: 90%;
                         max-width: 700px;
-                        margin: 15px 0;
+                        margin: 30px 0 15px 0;
                         box-shadow: 0 8px 24px rgba(0,0,0,0.08);
                     }
+
                     .button-container {
                         margin-top: 20px;
                         display: flex;
@@ -357,19 +365,38 @@ async fn homepage_invite() -> Html<String> {
                         gap: 10px;
                         flex-wrap: wrap;
                     }
+
                     button {
-                        background-color: #d8d8d0;
+                        background-color: #7a5438;
                         border: none;
-                        color: black;
+                        color: #ffffff;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
                         border-radius: 4px;
                         cursor: pointer;
                         transition: background-color 0.3s;
+                        font-family: Arial, sans-serif;
                     }
+
                     button:hover {
-                        background-color: #c6c6c0;
+                        background-color: #966948;
                     }
+
+                    footer p {
+                        font-size: 1em;
+                        color: #666;
+                        margin: 10px auto;
+                        max-width: 600px;
+                        line-height: 1.5;
+                        font-family: Arial, sans-serif;
+                    }
+
+                    footer a {
+                        color: #1121d1;
+                        text-decoration: underline;
+                        font-family: Arial, sans-serif;
+                    }
+
                     @media (max-width: 500px) {
                         button {
                             width: 80%;
@@ -382,22 +409,26 @@ async fn homepage_invite() -> Html<String> {
                 </style>
             </head>
             <body>
-                <h1>Bienvenue sur mon portfolio !</h1>
-                <p>
-                    Je vous invite à découvrir mes magnifiques créations.
-                    Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
-                </p>
-                <p style="color: #666;">Pour profiter pleinement, montez la luminosité de votre écran.</p>
-                <p style="color: #666;">Bonne visite !</p>
+                <header class="top-banner">
+                    <h1>Bienvenue sur mon portfolio !</h1>
+                    <p>
+                        Je vous invite à découvrir mes magnifiques créations.
+                        Ce site a été créé à la main, et avec amour ❤️, donc au moindre problème, n'hésitez pas à me contacter.
+                    </p>
+                    <p class="subtext">Pour profiter pleinement, montez la luminosité de votre écran.</p>
+                    <p class="subtext">Bonne visite !</p>
+                </header>
+
                 <img src="/images/banniere_2.jpg" alt="bannière"/>
                  
                 <div class="button-container">
                     <a href="/photo_invite"><button>Voir les photos</button></a>
                     <a href="/identification"><button>Identification</button></a>
                 </div>
+
                 <footer>
                     <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
-                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666;">Contact: <a href="mailto:khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
                     <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
                 </footer>
             </body>
@@ -440,8 +471,8 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
                         max-width: 300px;
                     }
                     button {
-                        background-color: #d8d8d0;
-                        color: #222;
+                        background-color: #7a5438;
+                        color: #fff;
                         border: none;
                         cursor: pointer;
                     }
@@ -490,7 +521,7 @@ async fn tout_photos_invite(
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
-                        background-color: #d8d8d0;
+                        background-color: #ebdecb;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -500,6 +531,52 @@ async fn tout_photos_invite(
                         margin: 30px 0;
                         font-size: 2em;
                     }
+
+                    header.top-banner {
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        z-index: 100;
+                        background-color: #534135; /* Couleur marron */
+                        padding: 15px 0;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+
+                    header.top-banner .actions {
+                        margin: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    header.top-banner .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+
+
+                    header.top-banner .btn {
+                        margin: 0;
+                        background-color: #7a5438;
+                        border: none;
+                        color: #ffffff;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        display: inline-block;
+                        transition: background-color 0.3s;
+                        font-family: Arial, sans-serif !important;
+                    }
+
+                    header.top-banner .btn:hover {
+                        background-color: #966948;
+                    }
+
                     .gallery {
                         display: grid;
                         grid-template-columns: minmax(0, 1fr);
@@ -540,37 +617,9 @@ async fn tout_photos_invite(
                         font-weight: bold;
                         color: #333;
                     }
-                    .btn {
-                        margin: 5px;
-                        background-color: #d8d8d0;
-                        border: none;
-                        color: #222;
-                        padding: 0.8em 1.5em;
-                        font-size: 1em;
-                        cursor: pointer;
-                        text-decoration: none;
-                        border-radius: 4px;
-                        display: inline-block;
-                        transition: background-color 0.3s;
-                    }
-                    .btn:hover {
-                        background-color: #c6c6c0;
-                    }
-                    .actions {
-                        margin: 20px 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .filters {
-                        display: flex;
-                        justify-content: center;
-                        flex-wrap: wrap;
-                        gap: 10px;
-                    }
+
                     @media (max-width: 600px) {
-                        .btn {
+                        header.top-banner .btn {
                             width: 80%;
                         }
                         .photo-card {
@@ -596,21 +645,48 @@ async fn tout_photos_invite(
                         border-radius: 10px;
                         box-shadow: 0 0 20px rgba(0, 0, 0, 1);
                     }
+
+                    #backToTop {
+                        display: none;            
+                        position: fixed;
+                        bottom: 30px;
+                        right: 30px;
+                        z-index: 999;
+                        border: none;
+                        background: transparent;
+                        width: 50px;
+                        height: 50px;
+                        padding: 0; 
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                    }
+                    #backToTop img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        display: block;
+                    }
+                    #backToTop:hover {
+                        transform: scale(1.1);
+                    }
                 </style>
             </head>
             <body>
-                <h1>Galerie</h1>
 
-                <div class='actions'>
-                    <a class='btn' href='/'>Accueil</a>
-                    <div class='filters'>
-                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
-                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
-                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
-                        <a class='btn' href='/photo_invite/sport'>Sport</a>
-                        <a class='btn' href='/photo_invite/autre'>Autre</a>
+                <header class='top-banner'>
+                    <div class='actions'>
+                        <a class='btn' href='/'>Accueil</a>
+                        <div class='filters'>
+                            <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                            <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                            <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                            <a class='btn' href='/photo_invite/sport'>Sport</a>
+                            <a class='btn' href='/photo_invite/autre'>Autre</a>
+                        </div>
                     </div>
-                </div>
+                </header>
+
+                <h1>Galerie</h1>
 
                 <div class='gallery'>
     "#);
@@ -637,9 +713,15 @@ async fn tout_photos_invite(
 
     html.push_str(r#"
                 </div>
+
                 <div class="overlay" id="overlay" onclick="closeImage()">
                     <img id="overlay-img" src="" alt=""/>
                 </div>
+
+                <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+                    <img src="/images/arrow.png" alt="Haut" />
+                </button>
+
                 <script>
                     function openImage(src) {
                         const overlay = document.getElementById('overlay');
@@ -650,74 +732,34 @@ async fn tout_photos_invite(
                     function closeImage() {
                         document.getElementById('overlay').style.display = 'none';
                     }
+
+                    window.onscroll = function() {
+                        const btn = document.getElementById("backToTop");
+                        if (btn) {
+                            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                                btn.style.display = "block";
+                            } else {
+                                btn.style.display = "none";
+                            }
+                        }
+                    };
+
+                    function scrollToTop() {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth"
+                        });
+                    }
                 </script>
 
                 <footer>
-                    <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
-                    <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-                    <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
+                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
                 </footer>
             </body>
         </html>
     "#);
-
-    html.push_str(r#"
-        </div>
-
-    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
-        <img src="/images/arrow.png" alt="Haut" />
-    </button>
-
-    <style>
-        #backToTop {
-            display: none;            
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            border: none;
-            background: transparent;
-            width: 50px;
-            height: 50px;
-            padding: 0; 
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        #backToTop img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        #backToTop:hover {
-            transform: scale(1.1);
-        }
-    </style>
-
-    <script>
-        window.onscroll = function() {
-            const btn = document.getElementById("backToTop");
-            if (btn) {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    btn.style.display = "block";
-                } else {
-                    btn.style.display = "none";
-                }
-            }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    </script>
-        </body>
-        </html>
-        "#);
 
     Ok(Html(html))
 }
@@ -742,11 +784,10 @@ async fn autre_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
-                        background-color: #d8d8d0;
+                        background-color: #ebdecb;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -756,52 +797,38 @@ async fn autre_photos_invite(
                         margin: 30px 0;
                         font-size: 2em;
                     }
-                    .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
-                        padding: 20px;
-                        max-width: 780px;
-                        margin: 0 auto;
-                    }
-                    .photo-card {
-                        background: #dcddd5;
-                        border: 1px solid #d1d1c8;
-                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
-                        overflow: hidden;
+
+                    header.top-banner {
+                        top: 0;
+                        left: 0;
                         width: 100%;
-                        max-width: none;
-                        transition: transform 0.3s, box-shadow 0.3s;
+                        z-index: 100;
+                        background-color: #534135; /* Couleur marron */
+                        padding: 15px 0;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     }
-                    .photo-card:hover {
-                        transform: translateY(-5px);
-                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+
+                    header.top-banner .actions {
+                        margin: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
                     }
-                    .photo-card img {
-                        width: 100%;
-                        height: auto;
-                        display: block;
-                        border-radius: 0;
-                        cursor: pointer;
-                        transition: transform 0.3s ease;
+
+                    header.top-banner .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
                     }
-                    .photo-card .desc {
-                        padding: 15px;
-                        text-align: left;
-                    }
-                    .photo-card .desc p {
-                        margin: 5px 0;
-                        color: #666;
-                    }
-                    .photo-card .desc span {
-                        font-weight: bold;
-                        color: #333;
-                    }
-                    .btn {
-                        margin: 5px;
-                        background-color: #d8d8d0;
+
+
+                    header.top-banner .btn {
+                        margin: 0;
+                        background-color: #7a5438;
                         border: none;
-                        color: #222;
+                        color: #ffffff;
                         padding: 0.8em 1.5em;
                         font-size: 1em;
                         cursor: pointer;
@@ -809,205 +836,13 @@ async fn autre_photos_invite(
                         border-radius: 4px;
                         display: inline-block;
                         transition: background-color 0.3s;
+                        font-family: Arial, sans-serif !important;
                     }
-                    .btn:hover {
-                        background-color: #c6c6c0;
+
+                    header.top-banner .btn:hover {
+                        background-color: #966948;
                     }
-                    .actions {
-                        margin: 20px 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .filters {
-                        display: flex;
-                        justify-content: center;
-                        flex-wrap: wrap;
-                        gap: 10px;
-                    }
-                    @media (max-width: 600px) {
-                        .btn {
-                            width: 80%;
-                        }
-                        .photo-card {
-                            width: 95%;
-                        }
-                    }
-                </style>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const images = document.querySelectorAll(".photo-card img");
-                        images.forEach(img => {
-                            img.addEventListener("click", () => {
-                                const overlay = document.createElement("div");
-                                overlay.style.position = "fixed";
-                                overlay.style.top = 0;
-                                overlay.style.left = 0;
-                                overlay.style.width = "100%";
-                                overlay.style.height = "100%";
-                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
-                                overlay.style.display = "flex";
-                                overlay.style.alignItems = "center";
-                                overlay.style.justifyContent = "center";
-                                overlay.style.zIndex = "1000";
-
-                                const bigImg = document.createElement("img");
-                                bigImg.src = img.src;
-                                bigImg.style.maxWidth = "95%";
-                                bigImg.style.maxHeight = "95%";
-                                bigImg.style.borderRadius = "10px";
-                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
-                                overlay.appendChild(bigImg);
-
-                                overlay.addEventListener("click", () => overlay.remove());
-                                document.body.appendChild(overlay);
-                            });
-                        });
-                    });
-                </script>
-            </head>
-            <body>
-                <h1>Galerie - Autres</h1>
-
-                <div class='actions'>
-                    <a class='btn' href='/'>Accueil</a>
-                    <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tout</a>
-                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
-                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
-                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
-                        <a class='btn' href='/photo_invite/sport'>Sport</a>
-                    </div>
-                </div>
-                <div class='gallery'>
-    "#);
-
-    for photo in rows.into_iter().rev() {
-        let filename = html_escape(&photo.filename);
-        let category = html_escape(&photo.category);
-        let description = html_escape(&photo.description);
-        html.push_str(&format!(
-            r#"
-                <div class='photo-card'>
-                    <img src='/images/{0}' alt='{1}'/>
-                    <div class='desc'>
-                        <p><span>Catégorie:</span> {1}</p>
-                        <p><span>Description:</span> {2}</p>
-                    </div>
-                </div>
-            "#,
-            filename,
-            category,
-            description
-        )
-    )
-
-    }
-    html.push_str(r#"
-        </div>
-
-        <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
-            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-        </footer>
-    </body>
-    </html>
-    "#);
-
-    html.push_str(r#"
-        </div>
-
-    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
-        <img src="/images/arrow.png" alt="Haut" />
-    </button>
-
-    <style>
-        #backToTop {
-            display: none;            
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            border: none;
-            background: transparent;
-            width: 50px;
-            height: 50px;
-            padding: 0; 
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        #backToTop img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        #backToTop:hover {
-            transform: scale(1.1);
-        }
-    </style>
-
-    <script>
-        window.onscroll = function() {
-            const btn = document.getElementById("backToTop");
-            if (btn) {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    btn.style.display = "block";
-                } else {
-                    btn.style.display = "none";
-                }
-            }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    </script>
-        </body>
-        </html>
-        "#);
-
-    html.push_str("</div></body></html>");
-    Ok(Html(html))
-}
-
-
-async fn portrait_photos_invite(
-    State(db): State<SqlitePool>,
-) -> Result<Html<String>, axum::http::StatusCode> {
-
-    let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT filename, description, category FROM photos WHERE category = 'portrait'"#
-    )
-    .fetch_all(&db)
-    .await
-    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
-
-    let mut html = String::from(r#"
-        <html>
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <style>
-                    body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #d8d8d0;
-                        text-align: center;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    h1 {
-                        color: #222;
-                        margin: 30px 0;
-                        font-size: 2em;
-                    }
                     .gallery {
                         display: grid;
                         grid-template-columns: minmax(0, 1fr);
@@ -1024,514 +859,7 @@ async fn portrait_photos_invite(
                         width: 100%;
                         max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
-                    }
-                    .photo-card:hover {
-                        transform: translateY(-5px);
-                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
-                    }
-                    .photo-card img {
-                        width: 100%;
-                        height: auto;
-                        display: block;
-                        border-radius: 0;
                         cursor: pointer;
-                        transition: transform 0.3s ease;
-                    }
-                    .photo-card .desc {
-                        padding: 15px;
-                        text-align: left;
-                    }
-                    .photo-card .desc p {
-                        margin: 5px 0;
-                        color: #666;
-                    }
-                    .photo-card .desc span {
-                        font-weight: bold;
-                        color: #333;
-                    }
-                    .btn {
-                        margin: 5px;
-                        background-color: #d8d8d0;
-                        border: none;
-                        color: #222;
-                        padding: 0.8em 1.5em;
-                        font-size: 1em;
-                        cursor: pointer;
-                        text-decoration: none;
-                        border-radius: 4px;
-                        display: inline-block;
-                        transition: background-color 0.3s;
-                    }
-                    .btn:hover {
-                        background-color: #c6c6c0;
-                    }
-                    .actions {
-                        margin: 20px 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .filters {
-                        display: flex;
-                        justify-content: center;
-                        flex-wrap: wrap;
-                        gap: 10px;
-                    }
-                    @media (max-width: 600px) {
-                        .btn {
-                            width: 80%;
-                        }
-                        .photo-card {
-                            width: 95%;
-                        }
-                    }
-                </style>
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const images = document.querySelectorAll(".photo-card img");
-                        images.forEach(img => {
-                            img.addEventListener("click", () => {
-                                const overlay = document.createElement("div");
-                                overlay.style.position = "fixed";
-                                overlay.style.top = 0;
-                                overlay.style.left = 0;
-                                overlay.style.width = "100%";
-                                overlay.style.height = "100%";
-                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
-                                overlay.style.display = "flex";
-                                overlay.style.alignItems = "center";
-                                overlay.style.justifyContent = "center";
-                                overlay.style.zIndex = "1000";
-
-                                const bigImg = document.createElement("img");
-                                bigImg.src = img.src;
-                                bigImg.style.maxWidth = "95%";
-                                bigImg.style.maxHeight = "95%";
-                                bigImg.style.borderRadius = "10px";
-                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
-                                overlay.appendChild(bigImg);
-
-                                overlay.addEventListener("click", () => overlay.remove());
-                                document.body.appendChild(overlay);
-                            });
-                        });
-                    });
-                </script>
-            </head>
-
-            <body>
-                <h1>Galerie - Portrait</h1>
-
-                <div class='actions'>
-                    <a class='btn' href='/'>Accueil</a>
-                    <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tout</a>
-                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
-                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
-                        <a class='btn' href='/photo_invite/sport'>Sport</a>
-                        <a class='btn' href='/photo_invite/autre'>Autre</a>
-                    </div>
-                </div>
-
-                <div class='gallery'>
-    "#);
-
-    for photo in rows.into_iter().rev() {
-        let filename = html_escape(&photo.filename);
-        let category = html_escape(&photo.category);
-        let description = html_escape(&photo.description);
-        html.push_str(&format!(
-            r#"
-                <div class='photo-card'>
-                    <img src='/images/{0}' alt='{1}'/>
-                    <div class='desc'>
-                        <p><span>Catégorie:</span> {1}</p>
-                        <p><span>Description:</span> {2}</p>
-                    </div>
-                </div>
-            "#,
-            filename,
-            category,
-            description
-        ));
-    }
-
-    html.push_str(r#"
-        </div>
-
-        <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
-            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-        </footer>
-    </body>
-    </html>
-    "#);
-
-    html.push_str(r#"
-        </div>
-
-    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
-        <img src="/images/arrow.png" alt="Haut" />
-    </button>
-
-    <style>
-        #backToTop {
-            display: none;            
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            border: none;
-            background: transparent;
-            width: 50px;
-            height: 50px;
-            padding: 0; 
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        #backToTop img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        #backToTop:hover {
-            transform: scale(1.1);
-        }
-    </style>
-
-    <script>
-        window.onscroll = function() {
-            const btn = document.getElementById("backToTop");
-            if (btn) {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    btn.style.display = "block";
-                } else {
-                    btn.style.display = "none";
-                }
-            }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    </script>
-        </body>
-        </html>
-        "#);
-
-    html.push_str("</div></body></html>");
-
-    Ok(Html(html))
-}
-
-
-async fn sport_photos_invite(
-    State(db): State<SqlitePool>,
-) -> Result<Html<String>, axum::http::StatusCode> {
-
-    let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT filename, description, category FROM photos WHERE category = 'sport'"#
-    )
-    .fetch_all(&db)
-    .await
-    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
-
-    let mut html = String::from(r#"
-        <html>
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <style>
-                    body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #d8d8d0;
-                        text-align: center;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    h1 {
-                        color: #222;
-                        margin: 30px 0;
-                        font-size: 2em;
-                    }
-                    .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
-                        padding: 20px;
-                        max-width: 780px;
-                        margin: 0 auto;
-                    }
-                    .photo-card {
-                        background: #dcddd5;
-                        border: 1px solid #d1d1c8;
-                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
-                        overflow: hidden;
-                        width: 100%;
-                        max-width: none;
-                        transition: transform 0.3s, box-shadow 0.3s;
-                    }
-                    .photo-card:hover {
-                        transform: translateY(-5px);
-                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
-                    }
-                    .photo-card img {
-                        width: 100%;
-                        height: auto;
-                        display: block;
-                        border-radius: 0;
-                        cursor: pointer;
-                        transition: transform 0.3s ease;
-                    }
-                    .photo-card .desc {
-                        padding: 15px;
-                        text-align: left;
-                    }
-                    .photo-card .desc p {
-                        margin: 5px 0;
-                        color: #666;
-                    }
-                    .photo-card .desc span {
-                        font-weight: bold;
-                        color: #333;
-                    }
-                    .btn {
-                        margin: 5px;
-                        background-color: #d8d8d0;
-                        border: none;
-                        color: #222;
-                        padding: 0.8em 1.5em;
-                        font-size: 1em;
-                        cursor: pointer;
-                        text-decoration: none;
-                        border-radius: 4px;
-                        display: inline-block;
-                        transition: background-color 0.3s;
-                    }
-                    .btn:hover {
-                        background-color: #c6c6c0;
-                    }
-                    .actions {
-                        margin: 20px 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .filters {
-                        display: flex;
-                        justify-content: center;
-                        flex-wrap: wrap;
-                        gap: 10px;
-                    }
-                    @media (max-width: 600px) {
-                        .btn {
-                            width: 80%;
-                        }
-                        .photo-card {
-                            width: 95%;
-                        }
-                    }
-                </style>
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const images = document.querySelectorAll(".photo-card img");
-                        images.forEach(img => {
-                            img.addEventListener("click", () => {
-                                const overlay = document.createElement("div");
-                                overlay.style.position = "fixed";
-                                overlay.style.top = 0;
-                                overlay.style.left = 0;
-                                overlay.style.width = "100%";
-                                overlay.style.height = "100%";
-                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
-                                overlay.style.display = "flex";
-                                overlay.style.alignItems = "center";
-                                overlay.style.justifyContent = "center";
-                                overlay.style.zIndex = "1000";
-
-                                const bigImg = document.createElement("img");
-                                bigImg.src = img.src;
-                                bigImg.style.maxWidth = "95%";
-                                bigImg.style.maxHeight = "95%";
-                                bigImg.style.borderRadius = "10px";
-                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
-                                overlay.appendChild(bigImg);
-
-                                overlay.addEventListener("click", () => overlay.remove());
-                                document.body.appendChild(overlay);
-                            });
-                        });
-                    });
-                </script>
-            </head>
-            <body>
-                <h1>Galerie - Sport</h1>
-
-                <div class='actions'>
-                    <a class='btn' href='/'>Accueil</a>
-                    <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tout</a>
-                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
-                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
-                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
-                        <a class='btn' href='/photo_invite/autre'>Autre</a>
-                    </div>
-                </div>
-
-                <div class='gallery'>
-    "#);
-
-    for photo in rows.into_iter().rev() {
-        let filename = html_escape(&photo.filename);
-        let category = html_escape(&photo.category);
-        let description = html_escape(&photo.description);
-        html.push_str(&format!(
-            r#"
-                <div class='photo-card'>
-                    <img src='/images/{0}' alt='{1}'/>
-                    <div class='desc'>
-                        <p><span>Catégorie:</span> {1}</p>
-                        <p><span>Description:</span> {2}</p>
-                    </div>
-                </div>
-            "#,
-            filename,
-            category,
-            description
-        ));
-    }
-
-    html.push_str(r#"
-        </div>
-
-        <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
-            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-        </footer>
-    </body>
-    </html>
-    "#);
-
-    html.push_str("</div></body></html>");
-
-    html.push_str(r#"
-        </div>
-
-    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
-        <img src="/images/arrow.png" alt="Haut" />
-    </button>
-
-    <style>
-        #backToTop {
-            display: none;            
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            border: none;
-            background: transparent;
-            width: 50px;
-            height: 50px;
-            padding: 0; 
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        #backToTop img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        #backToTop:hover {
-            transform: scale(1.1);
-        }
-    </style>
-
-    <script>
-        window.onscroll = function() {
-            const btn = document.getElementById("backToTop");
-            if (btn) {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    btn.style.display = "block";
-                } else {
-                    btn.style.display = "none";
-                }
-            }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    </script>
-        </body>
-        </html>
-        "#);
-
-    Ok(Html(html))
-}
-
-
-async fn animaux_photos_invite(
-    State(db): State<SqlitePool>,
-) -> Result<Html<String>, axum::http::StatusCode> {
-
-    let rows = sqlx::query_as::<_, Photo>(
-        r#"SELECT filename, description, category FROM photos WHERE category = 'animaux'"#
-    )
-    .fetch_all(&db)
-    .await
-    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
-
-    let mut html = String::from(r#"
-        <html>
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <style>
-                    body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #d8d8d0;
-                        text-align: center;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    h1 {
-                        color: #222;
-                        margin: 30px 0;
-                        font-size: 2em;
-                    }
-                    .gallery {
-                        display: grid;
-                        grid-template-columns: minmax(0, 1fr);
-                        gap: 22px;
-                        padding: 20px;
-                        max-width: 780px;
-                        margin: 0 auto;
-                    }
-                    .photo-card {
-                        background: #dcddd5;
-                        border: 1px solid #d1d1c8;
-                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
-                        overflow: hidden;
-                        width: 100%;
-                        max-width: none;
-                        transition: transform 0.3s, box-shadow 0.3s;
-                        cursor: pointer; /* 🔹 clic actif */
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
@@ -1555,37 +883,9 @@ async fn animaux_photos_invite(
                         font-weight: bold;
                         color: #333;
                     }
-                    .btn {
-                        margin: 5px;
-                        background-color: #d8d8d0;
-                        border: none;
-                        color: #222;
-                        padding: 0.8em 1.5em;
-                        font-size: 1em;
-                        cursor: pointer;
-                        text-decoration: none;
-                        border-radius: 4px;
-                        display: inline-block;
-                        transition: background-color 0.3s;
-                    }
-                    .btn:hover {
-                        background-color: #c6c6c0;
-                    }
-                    .actions {
-                        margin: 20px 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .filters {
-                        display: flex;
-                        justify-content: center;
-                        flex-wrap: wrap;
-                        gap: 10px;
-                    }
+
                     @media (max-width: 600px) {
-                        .btn {
+                        header.top-banner .btn {
                             width: 80%;
                         }
                         .photo-card {
@@ -1593,7 +893,6 @@ async fn animaux_photos_invite(
                         }
                     }
 
-                    /* 🔹 Overlay pour zoom image */
                     .overlay {
                         display: none;
                         position: fixed;
@@ -1601,7 +900,7 @@ async fn animaux_photos_invite(
                         left: 0;
                         width: 100%;
                         height: 100%;
-                        background: rgba(0, 0, 0, 0.85);
+                        background: rgba(0, 0, 0, 0.8);
                         justify-content: center;
                         align-items: center;
                         z-index: 1000;
@@ -1612,21 +911,48 @@ async fn animaux_photos_invite(
                         border-radius: 10px;
                         box-shadow: 0 0 20px rgba(0, 0, 0, 1);
                     }
+
+                    #backToTop {
+                        display: none;            
+                        position: fixed;
+                        bottom: 30px;
+                        right: 30px;
+                        z-index: 999;
+                        border: none;
+                        background: transparent;
+                        width: 50px;
+                        height: 50px;
+                        padding: 0; 
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                    }
+                    #backToTop img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        display: block;
+                    }
+                    #backToTop:hover {
+                        transform: scale(1.1);
+                    }
                 </style>
             </head>
             <body>
-                <h1>Galerie - Animaux</h1>
 
-                <div class='actions'>
-                    <a class='btn' href='/'>Accueil</a>
-                    <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tout</a>
-                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
-                        <a class='btn' href='/photo_invite/paysage'>Paysage</a>
-                        <a class='btn' href='/photo_invite/sport'>Sport</a>
-                        <a class='btn' href='/photo_invite/autre'>Autre</a>
+                <header class='top-banner'>
+                    <div class='actions'>
+                        <a class='btn' href='/'>Accueil</a>
+                        <div class='filters'>
+                            <a class='btn' href='/photo_invite'>Tout</a>
+                            <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                            <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                            <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                            <a class='btn' href='/photo_invite/sport'>Sport</a>
+                        </div>
                     </div>
-                </div>
+                </header>
+
+                <h1>Galerie - Autre</h1>
 
                 <div class='gallery'>
     "#);
@@ -1650,17 +976,6 @@ async fn animaux_photos_invite(
             description
         ));
     }
-    html.push_str(r#"
-        </div>
-
-        <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
-            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-        </footer>
-    </body>
-    </html>
-    "#);
 
     html.push_str(r#"
                 </div>
@@ -1668,6 +983,10 @@ async fn animaux_photos_invite(
                 <div class="overlay" id="overlay" onclick="closeImage()">
                     <img id="overlay-img" src="" alt=""/>
                 </div>
+
+                <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+                    <img src="/images/arrow.png" alt="Haut" />
+                </button>
 
                 <script>
                     function openImage(src) {
@@ -1679,68 +998,817 @@ async fn animaux_photos_invite(
                     function closeImage() {
                         document.getElementById('overlay').style.display = 'none';
                     }
+
+                    window.onscroll = function() {
+                        const btn = document.getElementById("backToTop");
+                        if (btn) {
+                            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                                btn.style.display = "block";
+                            } else {
+                                btn.style.display = "none";
+                            }
+                        }
+                    };
+
+                    function scrollToTop() {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth"
+                        });
+                    }
                 </script>
+
+                <footer>
+                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
+                </footer>
             </body>
         </html>
     "#);
 
+    Ok(Html(html))
+}
+
+
+async fn portrait_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT filename, description, category FROM photos WHERE category = 'portrait'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: 'Orbitron', sans-serif;
+                        background-color: #ebdecb;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2em;
+                    }
+
+                    header.top-banner {
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        z-index: 100;
+                        background-color: #534135; /* Couleur marron */
+                        padding: 15px 0;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+
+                    header.top-banner .actions {
+                        margin: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    header.top-banner .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+
+
+                    header.top-banner .btn {
+                        margin: 0;
+                        background-color: #7a5438;
+                        border: none;
+                        color: #ffffff;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        display: inline-block;
+                        transition: background-color 0.3s;
+                        font-family: Arial, sans-serif !important;
+                    }
+
+                    header.top-banner .btn:hover {
+                        background-color: #966948;
+                    }
+
+                    .gallery {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
+                        padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
+                    }
+                    .photo-card {
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
+                        overflow: hidden;
+                        width: 100%;
+                        max-width: none;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                        cursor: pointer;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #666;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+
+                    @media (max-width: 600px) {
+                        header.top-banner .btn {
+                            width: 80%;
+                        }
+                        .photo-card {
+                            width: 95%;
+                        }
+                    }
+
+                    .overlay {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .overlay img {
+                        max-width: 95%;
+                        max-height: 90%;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+                    }
+
+                    #backToTop {
+                        display: none;            
+                        position: fixed;
+                        bottom: 30px;
+                        right: 30px;
+                        z-index: 999;
+                        border: none;
+                        background: transparent;
+                        width: 50px;
+                        height: 50px;
+                        padding: 0; 
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                    }
+                    #backToTop img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        display: block;
+                    }
+                    #backToTop:hover {
+                        transform: scale(1.1);
+                    }
+                </style>
+            </head>
+            <body>
+
+                <header class='top-banner'>
+                    <div class='actions'>
+                        <a class='btn' href='/'>Accueil</a>
+                        <div class='filters'>
+                            <a class='btn' href='/photo_invite'>Tout</a>
+                            <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                            <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                            <a class='btn' href='/photo_invite/sport'>Sport</a>
+                            <a class='btn' href='/photo_invite/autre'>Autre</a>
+                        </div>
+                    </div>
+                </header>
+
+                <h1>Galerie - Portrait</h1>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows.into_iter().rev() {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card' onclick="openImage('/images/{0}')">
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            filename,
+            category,
+            description
+        ));
+    }
+
     html.push_str(r#"
-        </div>
+                </div>
 
-    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
-        <img src="/images/arrow.png" alt="Haut" />
-    </button>
+                <div class="overlay" id="overlay" onclick="closeImage()">
+                    <img id="overlay-img" src="" alt=""/>
+                </div>
 
-    <style>
-        #backToTop {
-            display: none;            
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            border: none;
-            background: transparent;
-            width: 50px;
-            height: 50px;
-            padding: 0; 
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
+                <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+                    <img src="/images/arrow.png" alt="Haut" />
+                </button>
 
-        #backToTop img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
+                <script>
+                    function openImage(src) {
+                        const overlay = document.getElementById('overlay');
+                        const img = document.getElementById('overlay-img');
+                        img.src = src;
+                        overlay.style.display = 'flex';
+                    }
+                    function closeImage() {
+                        document.getElementById('overlay').style.display = 'none';
+                    }
 
-        #backToTop:hover {
-            transform: scale(1.1);
-        }
-    </style>
+                    window.onscroll = function() {
+                        const btn = document.getElementById("backToTop");
+                        if (btn) {
+                            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                                btn.style.display = "block";
+                            } else {
+                                btn.style.display = "none";
+                            }
+                        }
+                    };
 
-    <script>
-        window.onscroll = function() {
-            const btn = document.getElementById("backToTop");
-            if (btn) {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    btn.style.display = "block";
-                } else {
-                    btn.style.display = "none";
-                }
-            }
-        };
+                    function scrollToTop() {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth"
+                        });
+                    }
+                </script>
 
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    </script>
-        </body>
+                <footer>
+                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
+                </footer>
+            </body>
         </html>
-        "#);
+    "#);
+
+    Ok(Html(html))
+}
+
+
+async fn sport_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT filename, description, category FROM photos WHERE category = 'sport'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: 'Orbitron', sans-serif;
+                        background-color: #ebdecb;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2em;
+                    }
+
+                    header.top-banner {
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        z-index: 100;
+                        background-color: #534135; /* Couleur marron */
+                        padding: 15px 0;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+
+                    header.top-banner .actions {
+                        margin: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    header.top-banner .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+
+
+                    header.top-banner .btn {
+                        margin: 0;
+                        background-color: #7a5438;
+                        border: none;
+                        color: #ffffff;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        display: inline-block;
+                        transition: background-color 0.3s;
+                        font-family: Arial, sans-serif !important;
+                    }
+
+                    header.top-banner .btn:hover {
+                        background-color: #966948;
+                    }
+
+                    .gallery {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
+                        padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
+                    }
+                    .photo-card {
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
+                        overflow: hidden;
+                        width: 100%;
+                        max-width: none;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                        cursor: pointer;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #666;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+
+                    @media (max-width: 600px) {
+                        header.top-banner .btn {
+                            width: 80%;
+                        }
+                        .photo-card {
+                            width: 95%;
+                        }
+                    }
+
+                    .overlay {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .overlay img {
+                        max-width: 95%;
+                        max-height: 90%;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+                    }
+
+                    #backToTop {
+                        display: none;            
+                        position: fixed;
+                        bottom: 30px;
+                        right: 30px;
+                        z-index: 999;
+                        border: none;
+                        background: transparent;
+                        width: 50px;
+                        height: 50px;
+                        padding: 0; 
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                    }
+                    #backToTop img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        display: block;
+                    }
+                    #backToTop:hover {
+                        transform: scale(1.1);
+                    }
+                </style>
+            </head>
+            <body>
+
+                <header class='top-banner'>
+                    <div class='actions'>
+                        <a class='btn' href='/'>Accueil</a>
+                        <div class='filters'>
+                            <a class='btn' href='/photo_invite'>Tout</a>
+                            <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                            <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                            <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                            <a class='btn' href='/photo_invite/autre'>Autre</a>
+                        </div>
+                    </div>
+                </header>
+
+                <h1>Galerie - Sport</h1>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows.into_iter().rev() {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card' onclick="openImage('/images/{0}')">
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            filename,
+            category,
+            description
+        ));
+    }
+
+    html.push_str(r#"
+                </div>
+
+                <div class="overlay" id="overlay" onclick="closeImage()">
+                    <img id="overlay-img" src="" alt=""/>
+                </div>
+
+                <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+                    <img src="/images/arrow.png" alt="Haut" />
+                </button>
+
+                <script>
+                    function openImage(src) {
+                        const overlay = document.getElementById('overlay');
+                        const img = document.getElementById('overlay-img');
+                        img.src = src;
+                        overlay.style.display = 'flex';
+                    }
+                    function closeImage() {
+                        document.getElementById('overlay').style.display = 'none';
+                    }
+
+                    window.onscroll = function() {
+                        const btn = document.getElementById("backToTop");
+                        if (btn) {
+                            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                                btn.style.display = "block";
+                            } else {
+                                btn.style.display = "none";
+                            }
+                        }
+                    };
+
+                    function scrollToTop() {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth"
+                        });
+                    }
+                </script>
+
+                <footer>
+                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
+                </footer>
+            </body>
+        </html>
+    "#);
+
+    Ok(Html(html))
+}
+
+
+async fn animaux_photos_invite(
+    State(db): State<SqlitePool>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+
+    let rows = sqlx::query_as::<_, Photo>(
+        r#"SELECT filename, description, category FROM photos WHERE category = 'animaux'"#
+    )
+    .fetch_all(&db)
+    .await
+    .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
+
+    let mut html = String::from(r#"
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: 'Orbitron', sans-serif;
+                        background-color: #ebdecb;
+                        text-align: center;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    h1 {
+                        color: #222;
+                        margin: 30px 0;
+                        font-size: 2em;
+                    }
+
+                    header.top-banner {
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        z-index: 100;
+                        background-color: #534135; /* Couleur marron */
+                        padding: 15px 0;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+
+                    header.top-banner .actions {
+                        margin: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    header.top-banner .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+
+
+                    header.top-banner .btn {
+                        margin: 0;
+                        background-color: #7a5438;
+                        border: none;
+                        color: #ffffff;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        display: inline-block;
+                        transition: background-color 0.3s;
+                        font-family: Arial, sans-serif !important;
+                    }
+
+                    header.top-banner .btn:hover {
+                        background-color: #966948;
+                    }
+
+                    .gallery {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr);
+                        gap: 22px;
+                        padding: 20px;
+                        max-width: 780px;
+                        margin: 0 auto;
+                    }
+                    .photo-card {
+                        background: #dcddd5;
+                        border: 1px solid #d1d1c8;
+                        box-shadow: 0 6px 18px rgba(0,0,0,0.035);
+                        overflow: hidden;
+                        width: 100%;
+                        max-width: none;
+                        transition: transform 0.3s, box-shadow 0.3s;
+                        cursor: pointer;
+                    }
+                    .photo-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+                    }
+                    .photo-card img {
+                        width: 100%;
+                        height: auto;
+                        display: block;
+                        border-radius: 0;
+                    }
+                    .photo-card .desc {
+                        padding: 15px;
+                        text-align: left;
+                    }
+                    .photo-card .desc p {
+                        margin: 5px 0;
+                        color: #666;
+                    }
+                    .photo-card .desc span {
+                        font-weight: bold;
+                        color: #333;
+                    }
+
+                    @media (max-width: 600px) {
+                        header.top-banner .btn {
+                            width: 80%;
+                        }
+                        .photo-card {
+                            width: 95%;
+                        }
+                    }
+
+                    .overlay {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .overlay img {
+                        max-width: 95%;
+                        max-height: 90%;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+                    }
+
+                    #backToTop {
+                        display: none;            
+                        position: fixed;
+                        bottom: 30px;
+                        right: 30px;
+                        z-index: 999;
+                        border: none;
+                        background: transparent;
+                        width: 50px;
+                        height: 50px;
+                        padding: 0; 
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                    }
+                    #backToTop img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        display: block;
+                    }
+                    #backToTop:hover {
+                        transform: scale(1.1);
+                    }
+                </style>
+            </head>
+            <body>
+
+                <header class='top-banner'>
+                    <div class='actions'>
+                        <a class='btn' href='/'>Accueil</a>
+                        <div class='filters'>
+                            <a class='btn' href='/photo_invite'>Tout</a>
+                            <a class='btn' href='/photo_invite/paysage'>Paysage</a>
+                            <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                            <a class='btn' href='/photo_invite/sport'>Sport</a>
+                            <a class='btn' href='/photo_invite/autre'>Autre</a>
+                        </div>
+                    </div>
+                </header>
+
+                <h1>Galerie - Animaux</h1>
+
+                <div class='gallery'>
+    "#);
+
+    for photo in rows.into_iter().rev() {
+        let filename = html_escape(&photo.filename);
+        let category = html_escape(&photo.category);
+        let description = html_escape(&photo.description);
+        html.push_str(&format!(
+            r#"
+                <div class='photo-card' onclick="openImage('/images/{0}')">
+                    <img src='/images/{0}' alt='{1}'/>
+                    <div class='desc'>
+                        <p><span>Catégorie:</span> {1}</p>
+                        <p><span>Description:</span> {2}</p>
+                    </div>
+                </div>
+            "#,
+            filename,
+            category,
+            description
+        ));
+    }
+
+    html.push_str(r#"
+                </div>
+
+                <div class="overlay" id="overlay" onclick="closeImage()">
+                    <img id="overlay-img" src="" alt=""/>
+                </div>
+
+                <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+                    <img src="/images/arrow.png" alt="Haut" />
+                </button>
+
+                <script>
+                    function openImage(src) {
+                        const overlay = document.getElementById('overlay');
+                        const img = document.getElementById('overlay-img');
+                        img.src = src;
+                        overlay.style.display = 'flex';
+                    }
+                    function closeImage() {
+                        document.getElementById('overlay').style.display = 'none';
+                    }
+
+                    window.onscroll = function() {
+                        const btn = document.getElementById("backToTop");
+                        if (btn) {
+                            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                                btn.style.display = "block";
+                            } else {
+                                btn.style.display = "none";
+                            }
+                        }
+                    };
+
+                    function scrollToTop() {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth"
+                        });
+                    }
+                </script>
+
+                <footer>
+                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
+                </footer>
+            </body>
+        </html>
+    "#);
 
     Ok(Html(html))
 }
@@ -1760,11 +1828,10 @@ async fn paysage_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        background-color: #d8d8d0;
+                        font-family: 'Orbitron', sans-serif;
+                        background-color: #ebdecb;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -1774,6 +1841,52 @@ async fn paysage_photos_invite(
                         margin: 30px 0;
                         font-size: 2em;
                     }
+
+                    header.top-banner {
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        z-index: 100;
+                        background-color: #534135; /* Couleur marron */
+                        padding: 15px 0;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+
+                    header.top-banner .actions {
+                        margin: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    header.top-banner .filters {
+                        display: flex;
+                        justify-content: center;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+
+
+                    header.top-banner .btn {
+                        margin: 0;
+                        background-color: #7a5438;
+                        border: none;
+                        color: #ffffff;
+                        padding: 0.8em 1.5em;
+                        font-size: 1em;
+                        cursor: pointer;
+                        text-decoration: none;
+                        border-radius: 4px;
+                        display: inline-block;
+                        transition: background-color 0.3s;
+                        font-family: Arial, sans-serif !important;
+                    }
+
+                    header.top-banner .btn:hover {
+                        background-color: #966948;
+                    }
+
                     .gallery {
                         display: grid;
                         grid-template-columns: minmax(0, 1fr);
@@ -1787,9 +1900,10 @@ async fn paysage_photos_invite(
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 100%; /* 🔹 width responsive */
-                        max-width: none; /* 🔹 limite sur desktop */
+                        width: 100%;
+                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
+                        cursor: pointer;
                     }
                     .photo-card:hover {
                         transform: translateY(-5px);
@@ -1800,8 +1914,6 @@ async fn paysage_photos_invite(
                         height: auto;
                         display: block;
                         border-radius: 0;
-                        cursor: pointer;
-                        transition: transform 0.3s ease;
                     }
                     .photo-card .desc {
                         padding: 15px;
@@ -1815,90 +1927,76 @@ async fn paysage_photos_invite(
                         font-weight: bold;
                         color: #333;
                     }
-                    .btn {
-                        margin: 5px;
-                        background-color: #d8d8d3;
-                        border: none;
-                        color: #222;
-                        padding: 0.8em 1.5em;
-                        font-size: 1em;
-                        cursor: pointer;
-                        text-decoration: none;
-                        border-radius: 4px;
-                        display: inline-block;
-                        transition: background-color 0.3s;
-                    }
-                    .btn:hover {
-                        background-color: #c6c6c0;
-                    }
-                    .actions {
-                        margin: 20px 0;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 10px;
-                    }
-                    .filters {
-                        display: flex;
-                        justify-content: center;
-                        flex-wrap: wrap;
-                        gap: 10px;
-                    }
+
                     @media (max-width: 600px) {
-                        .btn {
+                        header.top-banner .btn {
                             width: 80%;
                         }
                         .photo-card {
                             width: 95%;
                         }
                     }
+
+                    .overlay {
+                        display: none;
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0, 0, 0, 0.8);
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .overlay img {
+                        max-width: 95%;
+                        max-height: 90%;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+                    }
+
+                    #backToTop {
+                        display: none;            
+                        position: fixed;
+                        bottom: 30px;
+                        right: 30px;
+                        z-index: 999;
+                        border: none;
+                        background: transparent;
+                        width: 50px;
+                        height: 50px;
+                        padding: 0; 
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                    }
+                    #backToTop img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        display: block;
+                    }
+                    #backToTop:hover {
+                        transform: scale(1.1);
+                    }
                 </style>
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        const images = document.querySelectorAll(".photo-card img");
-                        images.forEach(img => {
-                            img.addEventListener("click", () => {
-                                const overlay = document.createElement("div");
-                                overlay.style.position = "fixed";
-                                overlay.style.top = 0;
-                                overlay.style.left = 0;
-                                overlay.style.width = "100%";
-                                overlay.style.height = "100%";
-                                overlay.style.backgroundColor = "rgba(0,0,0,0.9)";
-                                overlay.style.display = "flex";
-                                overlay.style.alignItems = "center";
-                                overlay.style.justifyContent = "center";
-                                overlay.style.zIndex = "1000";
-
-                                const bigImg = document.createElement("img");
-                                bigImg.src = img.src;
-                                bigImg.style.maxWidth = "95%";
-                                bigImg.style.maxHeight = "95%";
-                                bigImg.style.borderRadius = "10px";
-                                bigImg.style.boxShadow = "0 0 20px rgba(0, 0, 0, 1)";
-                                overlay.appendChild(bigImg);
-
-                                overlay.addEventListener("click", () => overlay.remove());
-                                document.body.appendChild(overlay);
-                            });
-                        });
-                    });
-                </script>
             </head>
             <body>
-                <h1>Galerie - Paysage</h1>
 
-                <div class='actions'>
-                    <a class='btn' href='/'>Accueil</a>
-                    <div class='filters'>
-                        <a class='btn' href='/photo_invite'>Tout</a>
-                        <a class='btn' href='/photo_invite/animaux'>Animaux</a>
-                        <a class='btn' href='/photo_invite/portrait'>Portrait</a>
-                        <a class='btn' href='/photo_invite/sport'>Sport</a>
-                        <a class='btn' href='/photo_invite/autre'>Autre</a>
+                <header class='top-banner'>
+                    <div class='actions'>
+                        <a class='btn' href='/'>Accueil</a>
+                        <div class='filters'>
+                            <a class='btn' href='/photo_invite'>Tout</a>
+                            <a class='btn' href='/photo_invite/animaux'>Animaux</a>
+                            <a class='btn' href='/photo_invite/portrait'>Portrait</a>
+                            <a class='btn' href='/photo_invite/sport'>Sport</a>
+                            <a class='btn' href='/photo_invite/autre'>Autre</a>
+                        </div>
                     </div>
-                </div>
+                </header>
+
+                <h1>Galerie - Paysage</h1>
 
                 <div class='gallery'>
     "#);
@@ -1909,7 +2007,7 @@ async fn paysage_photos_invite(
         let description = html_escape(&photo.description);
         html.push_str(&format!(
             r#"
-                <div class='photo-card'>
+                <div class='photo-card' onclick="openImage('/images/{0}')">
                     <img src='/images/{0}' alt='{1}'/>
                     <div class='desc'>
                         <p><span>Catégorie:</span> {1}</p>
@@ -1924,76 +2022,54 @@ async fn paysage_photos_invite(
     }
 
     html.push_str(r#"
-        </div>
+                </div>
 
-        <footer>
-            <p style="color: #666; margin-top: 30px;">&copy; 2026 Badis Khouildi Gomez</p>
-            <p style="color: #666;">Contact: <a href="mailto: khouildibadis@gmail.com">khouildibadis@gmail.com</a></p>
-            <p style="color: #666;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank">@badis_kld</a></p>
-        </footer>
-    </body>
-    </html>
-    "#);
+                <div class="overlay" id="overlay" onclick="closeImage()">
+                    <img id="overlay-img" src="" alt=""/>
+                </div>
 
-    html.push_str("</div></body></html>");
+                <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
+                    <img src="/images/arrow.png" alt="Haut" />
+                </button>
 
-    html.push_str(r#"
-        </div>
+                <script>
+                    function openImage(src) {
+                        const overlay = document.getElementById('overlay');
+                        const img = document.getElementById('overlay-img');
+                        img.src = src;
+                        overlay.style.display = 'flex';
+                    }
+                    function closeImage() {
+                        document.getElementById('overlay').style.display = 'none';
+                    }
 
-    <button id="backToTop" onclick="scrollToTop()" title="Retour en haut">
-        <img src="/images/arrow.png" alt="Haut" />
-    </button>
+                    window.onscroll = function() {
+                        const btn = document.getElementById("backToTop");
+                        if (btn) {
+                            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                                btn.style.display = "block";
+                            } else {
+                                btn.style.display = "none";
+                            }
+                        }
+                    };
 
-    <style>
-        #backToTop {
-            display: none;            
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-            border: none;
-            background: transparent;
-            width: 50px;
-            height: 50px;
-            padding: 0; 
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
+                    function scrollToTop() {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth"
+                        });
+                    }
+                </script>
 
-        #backToTop img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        #backToTop:hover {
-            transform: scale(1.1);
-        }
-    </style>
-
-    <script>
-        window.onscroll = function() {
-            const btn = document.getElementById("backToTop");
-            if (btn) {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                    btn.style.display = "block";
-                } else {
-                    btn.style.display = "none";
-                }
-            }
-        };
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-    </script>
-        </body>
+                <footer>
+                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
+                </footer>
+            </body>
         </html>
-        "#);
+    "#);
 
     Ok(Html(html))
 }
