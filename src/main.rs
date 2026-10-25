@@ -519,6 +519,7 @@ async fn tout_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
@@ -533,12 +534,14 @@ async fn tout_photos_invite(
                         font-size: 2em;
                     }
 
+                    /* 🔹 BANDEAU MARRON FIXE */
                     header.top-banner {
+                        position: sticky;
                         top: 0;
                         left: 0;
                         width: 100%;
                         z-index: 100;
-                        background-color: #534135; /* Couleur marron */
+                        background-color: #534135;
                         padding: 15px 0;
                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     }
@@ -557,7 +560,6 @@ async fn tout_photos_invite(
                         flex-wrap: wrap;
                         gap: 10px;
                     }
-
 
                     header.top-banner .btn {
                         margin: 0;
@@ -578,57 +580,118 @@ async fn tout_photos_invite(
                         background-color: #966948;
                     }
 
+                    /* 🔹 STRIP / GALERIE FLEXBOX EN 2 COLONNES (MASONRY CHRONOLOGIQUE) */
                     .gallery {
-                        columns: 2;
-                        column-gap: 22px;
+                        display: flex;
+                        gap: 22px;
                         padding: 20px;
                         max-width: 1100px;
                         margin: 0 auto;
+                        align-items: flex-start;
                     }
+
+                    .gallery-column {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 22px;
+                        flex: 1;
+                        min-width: 0;
+                    }
+
                     .photo-card {
-                        display: inline-block;
                         width: 100%;
-                        box-sizing: border-box;
-                        break-inside: avoid;
-                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 100%;
-                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer;
+                        box-sizing: border-box;
                     }
+
                     .photo-card:hover {
                         transform: translateY(-5px);
                         box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
+
                     .photo-card img {
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
                     }
+
                     .photo-card .desc {
                         padding: 15px;
                         text-align: left;
                     }
+
                     .photo-card .desc p {
                         margin: 5px 0;
                         color: #666;
                     }
+
                     .photo-card .desc span {
                         font-weight: bold;
                         color: #333;
                     }
 
+                    /* 🔹 OPTIMISATIONS MOBILE */
                     @media (max-width: 600px) {
-                        header.top-banner .btn {
-                            width: 80%;
+                        header.top-banner .filters {
+                            display: flex;
+                            flex-wrap: nowrap;
+                            justify-content: space-between;
+                            gap: 4px;
+                            width: 100%;
+                            padding: 0 8px;
+                            box-sizing: border-box;
                         }
-                        .photo-card {
-                            width: 95%;
+
+                        header.top-banner .filters .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex: 1 1 0;
+                            min-width: 0;
+                            height: 32px;
+                            padding: 0 0.2em;
+                            font-size: 0.7em;
+                            white-space: nowrap;
+                        }
+
+                        header.top-banner .actions > .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 40px;
+                            padding: 0 0.8em;
+                            font-size: 0.85em;
+                        }
+
+                        .gallery {
+                            gap: 10px;
+                            padding: 10px;
+                        }
+
+                        .gallery-column {
+                            gap: 10px;
+                        }
+
+                        .photo-card .desc {
+                            padding: 8px;
+                        }
+
+                        .photo-card .desc p {
+                            margin: 2px 0;
+                            font-size: 0.75rem;
+                            line-height: 1.2;
+                        }
+
+                        #backToTop {
+                            width: clamp(40px, 10vw, 50px) !important;
+                            height: clamp(40px, 10vw, 50px) !important;
+                            right: 12px !important;
+                            bottom: 16px !important;
                         }
                     }
 
@@ -644,6 +707,7 @@ async fn tout_photos_invite(
                         align-items: center;
                         z-index: 1000;
                     }
+
                     .overlay img {
                         max-width: 95%;
                         max-height: 90%;
@@ -665,17 +729,18 @@ async fn tout_photos_invite(
                         cursor: pointer;
                         transition: transform 0.2s ease;
                     }
+
                     #backToTop img {
                         width: 100%;
                         height: 100%;
                         object-fit: contain;
                         display: block;
                     }
+
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                                    @media (max-width: 600px) { .gallery { columns: 1; } }
-</style>
+                </style>
             </head>
             <body>
 
@@ -728,13 +793,45 @@ async fn tout_photos_invite(
                     <img src="/images/arrow.png" alt="Haut" />
                 </button>
 
+                <footer>
+                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
+                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
+                </footer>
+
                 <script>
+                    /* 🔹 RÉPARTITION CHRONOLOGIQUE DES IMAGES EN 2 COLONNES */
+                    function layoutGallery() {
+                        const gallery = document.querySelector('.gallery');
+                        const cards = [...gallery.querySelectorAll('.photo-card')];
+                        
+                        if (cards.length === 0) return;
+
+                        const col1 = document.createElement('div');
+                        const col2 = document.createElement('div');
+                        col1.className = 'gallery-column';
+                        col2.className = 'gallery-column';
+
+                        cards.forEach((card, index) => {
+                            if (index % 2 === 0) {
+                                col1.appendChild(card);
+                            } else {
+                                col2.appendChild(card);
+                            }
+                        });
+
+                        gallery.replaceChildren(col1, col2);
+                    }
+
+                    layoutGallery();
+
                     function openImage(src) {
                         const overlay = document.getElementById('overlay');
                         const img = document.getElementById('overlay-img');
                         img.src = src;
                         overlay.style.display = 'flex';
                     }
+
                     function closeImage() {
                         document.getElementById('overlay').style.display = 'none';
                     }
@@ -757,19 +854,12 @@ async fn tout_photos_invite(
                         });
                     }
                 </script>
-
-                <footer>
-                    <p style="color: #666; margin-top: 30px; font-family: Arial, sans-serif;">&copy; 2026 Badis Khouildi Gomez</p>
-                    <p style="color: #666; font-family: Arial, sans-serif;">Contact: <a href="mailto:khouildibadis@gmail.com" style="color: #333; text-decoration: underline;">khouildibadis@gmail.com</a></p>
-                    <p style="color: #666; font-family: Arial, sans-serif;">Instagram: <a href="https://www.instagram.com/badis_kld/" target="_blank" style="color: #333; text-decoration: underline;">@badis_kld</a></p>
-                </footer>
             </body>
         </html>
     "#);
 
     Ok(Html(html))
 }
-
 
 
 
@@ -790,6 +880,7 @@ async fn autre_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
@@ -804,12 +895,14 @@ async fn autre_photos_invite(
                         font-size: 2em;
                     }
 
+                    /* 🔹 BANDEAU MARRON FIXE */
                     header.top-banner {
+                        position: sticky;
                         top: 0;
                         left: 0;
                         width: 100%;
                         z-index: 100;
-                        background-color: #534135; /* Couleur marron */
+                        background-color: #534135;
                         padding: 15px 0;
                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     }
@@ -828,7 +921,6 @@ async fn autre_photos_invite(
                         flex-wrap: wrap;
                         gap: 10px;
                     }
-
 
                     header.top-banner .btn {
                         margin: 0;
@@ -849,57 +941,118 @@ async fn autre_photos_invite(
                         background-color: #966948;
                     }
 
+                    /* 🔹 STRIP / GALERIE FLEXBOX EN 2 COLONNES (MASONRY CHRONOLOGIQUE) */
                     .gallery {
-                        columns: 2;
-                        column-gap: 22px;
+                        display: flex;
+                        gap: 22px;
                         padding: 20px;
                         max-width: 1100px;
                         margin: 0 auto;
+                        align-items: flex-start;
                     }
+
+                    .gallery-column {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 22px;
+                        flex: 1;
+                        min-width: 0;
+                    }
+
                     .photo-card {
-                        display: inline-block;
                         width: 100%;
-                        box-sizing: border-box;
-                        break-inside: avoid;
-                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 100%;
-                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer;
+                        box-sizing: border-box;
                     }
+
                     .photo-card:hover {
                         transform: translateY(-5px);
                         box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
+
                     .photo-card img {
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
                     }
+
                     .photo-card .desc {
                         padding: 15px;
                         text-align: left;
                     }
+
                     .photo-card .desc p {
                         margin: 5px 0;
                         color: #666;
                     }
+
                     .photo-card .desc span {
                         font-weight: bold;
                         color: #333;
                     }
 
+                    /* 🔹 OPTIMISATIONS MOBILE */
                     @media (max-width: 600px) {
-                        header.top-banner .btn {
-                            width: 80%;
+                        header.top-banner .filters {
+                            display: flex;
+                            flex-wrap: nowrap;
+                            justify-content: space-between;
+                            gap: 4px;
+                            width: 100%;
+                            padding: 0 8px;
+                            box-sizing: border-box;
                         }
-                        .photo-card {
-                            width: 95%;
+
+                        header.top-banner .filters .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex: 1 1 0;
+                            min-width: 0;
+                            height: 32px;
+                            padding: 0 0.2em;
+                            font-size: 0.7em;
+                            white-space: nowrap;
+                        }
+
+                        header.top-banner .actions > .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 40px;
+                            padding: 0 0.8em;
+                            font-size: 0.85em;
+                        }
+
+                        .gallery {
+                            gap: 10px;
+                            padding: 10px;
+                        }
+
+                        .gallery-column {
+                            gap: 10px;
+                        }
+
+                        .photo-card .desc {
+                            padding: 8px;
+                        }
+
+                        .photo-card .desc p {
+                            margin: 2px 0;
+                            font-size: 0.75rem;
+                            line-height: 1.2;
+                        }
+
+                        #backToTop {
+                            width: clamp(40px, 10vw, 50px) !important;
+                            height: clamp(40px, 10vw, 50px) !important;
+                            right: 12px !important;
+                            bottom: 16px !important;
                         }
                     }
 
@@ -915,6 +1068,7 @@ async fn autre_photos_invite(
                         align-items: center;
                         z-index: 1000;
                     }
+
                     .overlay img {
                         max-width: 95%;
                         max-height: 90%;
@@ -936,17 +1090,18 @@ async fn autre_photos_invite(
                         cursor: pointer;
                         transition: transform 0.2s ease;
                     }
+
                     #backToTop img {
                         width: 100%;
                         height: 100%;
                         object-fit: contain;
                         display: block;
                     }
+
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                                    @media (max-width: 600px) { .gallery { columns: 1; } }
-</style>
+                </style>
             </head>
             <body>
 
@@ -1000,6 +1155,31 @@ async fn autre_photos_invite(
                 </button>
 
                 <script>
+                    /* 🔹 RÉPARTITION CHRONOLOGIQUE DES IMAGES EN 2 COLONNES */
+                    function layoutGallery() {
+                        const gallery = document.querySelector('.gallery');
+                        const cards = [...gallery.querySelectorAll('.photo-card')];
+                        
+                        if (cards.length === 0) return;
+
+                        const col1 = document.createElement('div');
+                        const col2 = document.createElement('div');
+                        col1.className = 'gallery-column';
+                        col2.className = 'gallery-column';
+
+                        cards.forEach((card, index) => {
+                            if (index % 2 === 0) {
+                                col1.appendChild(card);
+                            } else {
+                                col2.appendChild(card);
+                            }
+                        });
+
+                        gallery.replaceChildren(col1, col2);
+                    }
+
+                    layoutGallery();
+
                     function openImage(src) {
                         const overlay = document.getElementById('overlay');
                         const img = document.getElementById('overlay-img');
@@ -1056,6 +1236,7 @@ async fn portrait_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
@@ -1070,12 +1251,14 @@ async fn portrait_photos_invite(
                         font-size: 2em;
                     }
 
+                    /* 🔹 BANDEAU MARRON FIXE */
                     header.top-banner {
+                        position: sticky;
                         top: 0;
                         left: 0;
                         width: 100%;
                         z-index: 100;
-                        background-color: #534135; /* Couleur marron */
+                        background-color: #534135;
                         padding: 15px 0;
                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     }
@@ -1094,7 +1277,6 @@ async fn portrait_photos_invite(
                         flex-wrap: wrap;
                         gap: 10px;
                     }
-
 
                     header.top-banner .btn {
                         margin: 0;
@@ -1115,57 +1297,118 @@ async fn portrait_photos_invite(
                         background-color: #966948;
                     }
 
+                    /* 🔹 STRIP / GALERIE FLEXBOX EN 2 COLONNES (MASONRY CHRONOLOGIQUE) */
                     .gallery {
-                        columns: 2;
-                        column-gap: 22px;
+                        display: flex;
+                        gap: 22px;
                         padding: 20px;
                         max-width: 1100px;
                         margin: 0 auto;
+                        align-items: flex-start;
                     }
+
+                    .gallery-column {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 22px;
+                        flex: 1;
+                        min-width: 0;
+                    }
+
                     .photo-card {
-                        display: inline-block;
                         width: 100%;
-                        box-sizing: border-box;
-                        break-inside: avoid;
-                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 100%;
-                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer;
+                        box-sizing: border-box;
                     }
+
                     .photo-card:hover {
                         transform: translateY(-5px);
                         box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
+
                     .photo-card img {
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
                     }
+
                     .photo-card .desc {
                         padding: 15px;
                         text-align: left;
                     }
+
                     .photo-card .desc p {
                         margin: 5px 0;
                         color: #666;
                     }
+
                     .photo-card .desc span {
                         font-weight: bold;
                         color: #333;
                     }
 
+                    /* 🔹 OPTIMISATIONS MOBILE */
                     @media (max-width: 600px) {
-                        header.top-banner .btn {
-                            width: 80%;
+                        header.top-banner .filters {
+                            display: flex;
+                            flex-wrap: nowrap;
+                            justify-content: space-between;
+                            gap: 4px;
+                            width: 100%;
+                            padding: 0 8px;
+                            box-sizing: border-box;
                         }
-                        .photo-card {
-                            width: 95%;
+
+                        header.top-banner .filters .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex: 1 1 0;
+                            min-width: 0;
+                            height: 32px;
+                            padding: 0 0.2em;
+                            font-size: 0.7em;
+                            white-space: nowrap;
+                        }
+
+                        header.top-banner .actions > .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 40px;
+                            padding: 0 0.8em;
+                            font-size: 0.85em;
+                        }
+
+                        .gallery {
+                            gap: 10px;
+                            padding: 10px;
+                        }
+
+                        .gallery-column {
+                            gap: 10px;
+                        }
+
+                        .photo-card .desc {
+                            padding: 8px;
+                        }
+
+                        .photo-card .desc p {
+                            margin: 2px 0;
+                            font-size: 0.75rem;
+                            line-height: 1.2;
+                        }
+
+                        #backToTop {
+                            width: clamp(40px, 10vw, 50px) !important;
+                            height: clamp(40px, 10vw, 50px) !important;
+                            right: 12px !important;
+                            bottom: 16px !important;
                         }
                     }
 
@@ -1181,6 +1424,7 @@ async fn portrait_photos_invite(
                         align-items: center;
                         z-index: 1000;
                     }
+
                     .overlay img {
                         max-width: 95%;
                         max-height: 90%;
@@ -1202,17 +1446,18 @@ async fn portrait_photos_invite(
                         cursor: pointer;
                         transition: transform 0.2s ease;
                     }
+
                     #backToTop img {
                         width: 100%;
                         height: 100%;
                         object-fit: contain;
                         display: block;
                     }
+
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                                    @media (max-width: 600px) { .gallery { columns: 1; } }
-</style>
+                </style>
             </head>
             <body>
 
@@ -1266,6 +1511,31 @@ async fn portrait_photos_invite(
                 </button>
 
                 <script>
+                    /* 🔹 RÉPARTITION CHRONOLOGIQUE DES IMAGES EN 2 COLONNES */
+                    function layoutGallery() {
+                        const gallery = document.querySelector('.gallery');
+                        const cards = [...gallery.querySelectorAll('.photo-card')];
+                        
+                        if (cards.length === 0) return;
+
+                        const col1 = document.createElement('div');
+                        const col2 = document.createElement('div');
+                        col1.className = 'gallery-column';
+                        col2.className = 'gallery-column';
+
+                        cards.forEach((card, index) => {
+                            if (index % 2 === 0) {
+                                col1.appendChild(card);
+                            } else {
+                                col2.appendChild(card);
+                            }
+                        });
+
+                        gallery.replaceChildren(col1, col2);
+                    }
+
+                    layoutGallery();
+
                     function openImage(src) {
                         const overlay = document.getElementById('overlay');
                         const img = document.getElementById('overlay-img');
@@ -1322,6 +1592,7 @@ async fn sport_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
@@ -1336,12 +1607,14 @@ async fn sport_photos_invite(
                         font-size: 2em;
                     }
 
+                    /* 🔹 BANDEAU MARRON FIXE */
                     header.top-banner {
+                        position: sticky;
                         top: 0;
                         left: 0;
                         width: 100%;
                         z-index: 100;
-                        background-color: #534135; /* Couleur marron */
+                        background-color: #534135;
                         padding: 15px 0;
                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     }
@@ -1360,7 +1633,6 @@ async fn sport_photos_invite(
                         flex-wrap: wrap;
                         gap: 10px;
                     }
-
 
                     header.top-banner .btn {
                         margin: 0;
@@ -1381,57 +1653,118 @@ async fn sport_photos_invite(
                         background-color: #966948;
                     }
 
+                    /* 🔹 STRIP / GALERIE FLEXBOX EN 2 COLONNES (MASONRY CHRONOLOGIQUE) */
                     .gallery {
-                        columns: 2;
-                        column-gap: 22px;
+                        display: flex;
+                        gap: 22px;
                         padding: 20px;
                         max-width: 1100px;
                         margin: 0 auto;
+                        align-items: flex-start;
                     }
+
+                    .gallery-column {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 22px;
+                        flex: 1;
+                        min-width: 0;
+                    }
+
                     .photo-card {
-                        display: inline-block;
                         width: 100%;
-                        box-sizing: border-box;
-                        break-inside: avoid;
-                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 100%;
-                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer;
+                        box-sizing: border-box;
                     }
+
                     .photo-card:hover {
                         transform: translateY(-5px);
                         box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
+
                     .photo-card img {
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
                     }
+
                     .photo-card .desc {
                         padding: 15px;
                         text-align: left;
                     }
+
                     .photo-card .desc p {
                         margin: 5px 0;
                         color: #666;
                     }
+
                     .photo-card .desc span {
                         font-weight: bold;
                         color: #333;
                     }
 
+                    /* 🔹 OPTIMISATIONS MOBILE */
                     @media (max-width: 600px) {
-                        header.top-banner .btn {
-                            width: 80%;
+                        header.top-banner .filters {
+                            display: flex;
+                            flex-wrap: nowrap;
+                            justify-content: space-between;
+                            gap: 4px;
+                            width: 100%;
+                            padding: 0 8px;
+                            box-sizing: border-box;
                         }
-                        .photo-card {
-                            width: 95%;
+
+                        header.top-banner .filters .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex: 1 1 0;
+                            min-width: 0;
+                            height: 32px;
+                            padding: 0 0.2em;
+                            font-size: 0.7em;
+                            white-space: nowrap;
+                        }
+
+                        header.top-banner .actions > .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 40px;
+                            padding: 0 0.8em;
+                            font-size: 0.85em;
+                        }
+
+                        .gallery {
+                            gap: 10px;
+                            padding: 10px;
+                        }
+
+                        .gallery-column {
+                            gap: 10px;
+                        }
+
+                        .photo-card .desc {
+                            padding: 8px;
+                        }
+
+                        .photo-card .desc p {
+                            margin: 2px 0;
+                            font-size: 0.75rem;
+                            line-height: 1.2;
+                        }
+
+                        #backToTop {
+                            width: clamp(40px, 10vw, 50px) !important;
+                            height: clamp(40px, 10vw, 50px) !important;
+                            right: 12px !important;
+                            bottom: 16px !important;
                         }
                     }
 
@@ -1447,6 +1780,7 @@ async fn sport_photos_invite(
                         align-items: center;
                         z-index: 1000;
                     }
+
                     .overlay img {
                         max-width: 95%;
                         max-height: 90%;
@@ -1468,17 +1802,18 @@ async fn sport_photos_invite(
                         cursor: pointer;
                         transition: transform 0.2s ease;
                     }
+
                     #backToTop img {
                         width: 100%;
                         height: 100%;
                         object-fit: contain;
                         display: block;
                     }
+
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                                    @media (max-width: 600px) { .gallery { columns: 1; } }
-</style>
+                </style>
             </head>
             <body>
 
@@ -1532,6 +1867,31 @@ async fn sport_photos_invite(
                 </button>
 
                 <script>
+                    /* 🔹 RÉPARTITION CHRONOLOGIQUE DES IMAGES EN 2 COLONNES */
+                    function layoutGallery() {
+                        const gallery = document.querySelector('.gallery');
+                        const cards = [...gallery.querySelectorAll('.photo-card')];
+                        
+                        if (cards.length === 0) return;
+
+                        const col1 = document.createElement('div');
+                        const col2 = document.createElement('div');
+                        col1.className = 'gallery-column';
+                        col2.className = 'gallery-column';
+
+                        cards.forEach((card, index) => {
+                            if (index % 2 === 0) {
+                                col1.appendChild(card);
+                            } else {
+                                col2.appendChild(card);
+                            }
+                        });
+
+                        gallery.replaceChildren(col1, col2);
+                    }
+
+                    layoutGallery();
+
                     function openImage(src) {
                         const overlay = document.getElementById('overlay');
                         const img = document.getElementById('overlay-img');
@@ -1588,6 +1948,7 @@ async fn animaux_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
@@ -1602,12 +1963,14 @@ async fn animaux_photos_invite(
                         font-size: 2em;
                     }
 
+                    /* 🔹 BANDEAU MARRON FIXE */
                     header.top-banner {
+                        position: sticky;
                         top: 0;
                         left: 0;
                         width: 100%;
                         z-index: 100;
-                        background-color: #534135; /* Couleur marron */
+                        background-color: #534135;
                         padding: 15px 0;
                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     }
@@ -1626,7 +1989,6 @@ async fn animaux_photos_invite(
                         flex-wrap: wrap;
                         gap: 10px;
                     }
-
 
                     header.top-banner .btn {
                         margin: 0;
@@ -1647,57 +2009,118 @@ async fn animaux_photos_invite(
                         background-color: #966948;
                     }
 
+                    /* 🔹 STRIP / GALERIE FLEXBOX EN 2 COLONNES (MASONRY CHRONOLOGIQUE) */
                     .gallery {
-                        columns: 2;
-                        column-gap: 22px;
+                        display: flex;
+                        gap: 22px;
                         padding: 20px;
                         max-width: 1100px;
                         margin: 0 auto;
+                        align-items: flex-start;
                     }
+
+                    .gallery-column {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 22px;
+                        flex: 1;
+                        min-width: 0;
+                    }
+
                     .photo-card {
-                        display: inline-block;
                         width: 100%;
-                        box-sizing: border-box;
-                        break-inside: avoid;
-                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 100%;
-                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer;
+                        box-sizing: border-box;
                     }
+
                     .photo-card:hover {
                         transform: translateY(-5px);
                         box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
+
                     .photo-card img {
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
                     }
+
                     .photo-card .desc {
                         padding: 15px;
                         text-align: left;
                     }
+
                     .photo-card .desc p {
                         margin: 5px 0;
                         color: #666;
                     }
+
                     .photo-card .desc span {
                         font-weight: bold;
                         color: #333;
                     }
 
+                    /* 🔹 OPTIMISATIONS MOBILE */
                     @media (max-width: 600px) {
-                        header.top-banner .btn {
-                            width: 80%;
+                        header.top-banner .filters {
+                            display: flex;
+                            flex-wrap: nowrap;
+                            justify-content: space-between;
+                            gap: 4px;
+                            width: 100%;
+                            padding: 0 8px;
+                            box-sizing: border-box;
                         }
-                        .photo-card {
-                            width: 95%;
+
+                        header.top-banner .filters .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex: 1 1 0;
+                            min-width: 0;
+                            height: 32px;
+                            padding: 0 0.2em;
+                            font-size: 0.7em;
+                            white-space: nowrap;
+                        }
+
+                        header.top-banner .actions > .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 40px;
+                            padding: 0 0.8em;
+                            font-size: 0.85em;
+                        }
+
+                        .gallery {
+                            gap: 10px;
+                            padding: 10px;
+                        }
+
+                        .gallery-column {
+                            gap: 10px;
+                        }
+
+                        .photo-card .desc {
+                            padding: 8px;
+                        }
+
+                        .photo-card .desc p {
+                            margin: 2px 0;
+                            font-size: 0.75rem;
+                            line-height: 1.2;
+                        }
+
+                        #backToTop {
+                            width: clamp(40px, 10vw, 50px) !important;
+                            height: clamp(40px, 10vw, 50px) !important;
+                            right: 12px !important;
+                            bottom: 16px !important;
                         }
                     }
 
@@ -1713,6 +2136,7 @@ async fn animaux_photos_invite(
                         align-items: center;
                         z-index: 1000;
                     }
+
                     .overlay img {
                         max-width: 95%;
                         max-height: 90%;
@@ -1734,17 +2158,18 @@ async fn animaux_photos_invite(
                         cursor: pointer;
                         transition: transform 0.2s ease;
                     }
+
                     #backToTop img {
                         width: 100%;
                         height: 100%;
                         object-fit: contain;
                         display: block;
                     }
+
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                                    @media (max-width: 600px) { .gallery { columns: 1; } }
-</style>
+                </style>
             </head>
             <body>
 
@@ -1798,6 +2223,31 @@ async fn animaux_photos_invite(
                 </button>
 
                 <script>
+                    /* 🔹 RÉPARTITION CHRONOLOGIQUE DES IMAGES EN 2 COLONNES */
+                    function layoutGallery() {
+                        const gallery = document.querySelector('.gallery');
+                        const cards = [...gallery.querySelectorAll('.photo-card')];
+                        
+                        if (cards.length === 0) return;
+
+                        const col1 = document.createElement('div');
+                        const col2 = document.createElement('div');
+                        col1.className = 'gallery-column';
+                        col2.className = 'gallery-column';
+
+                        cards.forEach((card, index) => {
+                            if (index % 2 === 0) {
+                                col1.appendChild(card);
+                            } else {
+                                col2.appendChild(card);
+                            }
+                        });
+
+                        gallery.replaceChildren(col1, col2);
+                    }
+
+                    layoutGallery();
+
                     function openImage(src) {
                         const overlay = document.getElementById('overlay');
                         const img = document.getElementById('overlay-img');
@@ -1854,6 +2304,7 @@ async fn paysage_photos_invite(
     let mut html = String::from(r#"
         <html>
             <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                 <style>
                     body {
                         font-family: 'Orbitron', sans-serif;
@@ -1868,12 +2319,14 @@ async fn paysage_photos_invite(
                         font-size: 2em;
                     }
 
+                    /* 🔹 BANDEAU MARRON FIXE */
                     header.top-banner {
+                        position: sticky;
                         top: 0;
                         left: 0;
                         width: 100%;
                         z-index: 100;
-                        background-color: #534135; /* Couleur marron */
+                        background-color: #534135;
                         padding: 15px 0;
                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                     }
@@ -1892,7 +2345,6 @@ async fn paysage_photos_invite(
                         flex-wrap: wrap;
                         gap: 10px;
                     }
-
 
                     header.top-banner .btn {
                         margin: 0;
@@ -1913,57 +2365,118 @@ async fn paysage_photos_invite(
                         background-color: #966948;
                     }
 
+                    /* 🔹 STRIP / GALERIE FLEXBOX EN 2 COLONNES (MASONRY CHRONOLOGIQUE) */
                     .gallery {
-                        columns: 2;
-                        column-gap: 22px;
+                        display: flex;
+                        gap: 22px;
                         padding: 20px;
                         max-width: 1100px;
                         margin: 0 auto;
+                        align-items: flex-start;
                     }
+
+                    .gallery-column {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 22px;
+                        flex: 1;
+                        min-width: 0;
+                    }
+
                     .photo-card {
-                        display: inline-block;
                         width: 100%;
-                        box-sizing: border-box;
-                        break-inside: avoid;
-                        margin-bottom: 22px;
                         background: #dcddd5;
                         border: 1px solid #d1d1c8;
                         box-shadow: 0 6px 18px rgba(0,0,0,0.035);
                         overflow: hidden;
-                        width: 100%;
-                        max-width: none;
                         transition: transform 0.3s, box-shadow 0.3s;
                         cursor: pointer;
+                        box-sizing: border-box;
                     }
+
                     .photo-card:hover {
                         transform: translateY(-5px);
                         box-shadow: 0 10px 24px rgba(0,0,0,0.07);
                     }
+
                     .photo-card img {
                         width: 100%;
                         height: auto;
                         display: block;
-                        border-radius: 0;
                     }
+
                     .photo-card .desc {
                         padding: 15px;
                         text-align: left;
                     }
+
                     .photo-card .desc p {
                         margin: 5px 0;
                         color: #666;
                     }
+
                     .photo-card .desc span {
                         font-weight: bold;
                         color: #333;
                     }
 
+                    /* 🔹 OPTIMISATIONS MOBILE */
                     @media (max-width: 600px) {
-                        header.top-banner .btn {
-                            width: 80%;
+                        header.top-banner .filters {
+                            display: flex;
+                            flex-wrap: nowrap;
+                            justify-content: space-between;
+                            gap: 4px;
+                            width: 100%;
+                            padding: 0 8px;
+                            box-sizing: border-box;
                         }
-                        .photo-card {
-                            width: 95%;
+
+                        header.top-banner .filters .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex: 1 1 0;
+                            min-width: 0;
+                            height: 32px;
+                            padding: 0 0.2em;
+                            font-size: 0.7em;
+                            white-space: nowrap;
+                        }
+
+                        header.top-banner .actions > .btn {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 40px;
+                            padding: 0 0.8em;
+                            font-size: 0.85em;
+                        }
+
+                        .gallery {
+                            gap: 10px;
+                            padding: 10px;
+                        }
+
+                        .gallery-column {
+                            gap: 10px;
+                        }
+
+                        .photo-card .desc {
+                            padding: 8px;
+                        }
+
+                        .photo-card .desc p {
+                            margin: 2px 0;
+                            font-size: 0.75rem;
+                            line-height: 1.2;
+                        }
+
+                        #backToTop {
+                            width: clamp(40px, 10vw, 50px) !important;
+                            height: clamp(40px, 10vw, 50px) !important;
+                            right: 12px !important;
+                            bottom: 16px !important;
                         }
                     }
 
@@ -1979,6 +2492,7 @@ async fn paysage_photos_invite(
                         align-items: center;
                         z-index: 1000;
                     }
+
                     .overlay img {
                         max-width: 95%;
                         max-height: 90%;
@@ -2000,17 +2514,18 @@ async fn paysage_photos_invite(
                         cursor: pointer;
                         transition: transform 0.2s ease;
                     }
+
                     #backToTop img {
                         width: 100%;
                         height: 100%;
                         object-fit: contain;
                         display: block;
                     }
+
                     #backToTop:hover {
                         transform: scale(1.1);
                     }
-                                    @media (max-width: 600px) { .gallery { columns: 1; } }
-</style>
+                </style>
             </head>
             <body>
 
@@ -2064,6 +2579,31 @@ async fn paysage_photos_invite(
                 </button>
 
                 <script>
+                    /* 🔹 RÉPARTITION CHRONOLOGIQUE DES IMAGES EN 2 COLONNES */
+                    function layoutGallery() {
+                        const gallery = document.querySelector('.gallery');
+                        const cards = [...gallery.querySelectorAll('.photo-card')];
+                        
+                        if (cards.length === 0) return;
+
+                        const col1 = document.createElement('div');
+                        const col2 = document.createElement('div');
+                        col1.className = 'gallery-column';
+                        col2.className = 'gallery-column';
+
+                        cards.forEach((card, index) => {
+                            if (index % 2 === 0) {
+                                col1.appendChild(card);
+                            } else {
+                                col2.appendChild(card);
+                            }
+                        });
+
+                        gallery.replaceChildren(col1, col2);
+                    }
+
+                    layoutGallery();
+
                     function openImage(src) {
                         const overlay = document.getElementById('overlay');
                         const img = document.getElementById('overlay-img');
