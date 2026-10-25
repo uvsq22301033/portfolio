@@ -171,7 +171,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        background-color: #d8d8d0;
+                        background-color: #ebdecb;
                         text-align: center;
                         margin: 20px;
                         padding: 0;
@@ -182,7 +182,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                         font-family: 'Orbitron', sans-serif;
                     }
                     button {
-                        background-color: #d8d8d3;
+                        background-color: #7a5438;
                         border: none;
                         color: black;
                         padding: 0.8em 1.5em;
@@ -193,7 +193,7 @@ async fn identification(cookies: Cookies) -> Html<String> {
                         transition: background-color 0.3s;
                     }
                     button:hover {
-                        background-color: #c6c6c0;
+                        background-color: #966948;
                     }
                     input[type="password"] {
                         padding: 10px;
@@ -366,6 +366,10 @@ async fn homepage_invite() -> Html<String> {
                         flex-wrap: wrap;
                     }
 
+                    .button-container a {
+                        text-decoration: none;
+                    }
+
                     button {
                         background-color: #7a5438;
                         border: none;
@@ -399,7 +403,12 @@ async fn homepage_invite() -> Html<String> {
 
                     @media (max-width: 500px) {
                         button {
-                            width: 80%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 40px;
+                            padding: 0 0.8em;
+                            font-size: 0.85em;
                         }
                         img {
                             width: 90%;
@@ -451,7 +460,7 @@ async fn homepage_admin(cookies: Cookies) -> Html<String> {
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        background-color: #d8d8d0;
+                        background-color: #ebdecb;
                         text-align: center;
                         padding: 40px;
                     }
@@ -635,7 +644,6 @@ async fn tout_photos_invite(
                         color: #333;
                     }
 
-                    /* 🔹 OPTIMISATIONS MOBILE */
                     @media (max-width: 600px) {
                         header.top-banner .filters {
                             display: flex;
